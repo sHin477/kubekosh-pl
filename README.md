@@ -1,4 +1,4 @@
-# KubeKosh PL — Instrukcja testowania i wdrożenia na GitHub
+# KubeKosh PL — Instrukcja instalacji i użytkowania
 
 ## Co zostało przetłumaczone
 
