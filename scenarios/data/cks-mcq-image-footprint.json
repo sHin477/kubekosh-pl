@@ -1,31 +1,31 @@
 {
   "id": "cks-mcq-image-footprint",
-  "title": "Minimizing Image Footprint",
+  "title": "Minimalizacja rozmiaru obrazu kontenera",
   "category": "Supply Chain Security",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 2,
-  "description": "Why is it highly recommended in the CKS exam to use base images like **Alpine Linux** or **Distroless** for your containerized applications?",
+  "description": "Dlaczego na egzaminie CKS zdecydowanie zaleca się używanie obrazów bazowych takich jak **Alpine Linux** lub **Distroless** dla aplikacji kontenerowych?",
   "options": [
     {
       "id": "a",
-      "text": "They automatically encrypt data at rest"
+      "text": "Automatycznie szyfrują dane w spoczynku"
     },
     {
       "id": "b",
-      "text": "They have a significantly reduced attack surface with fewer packages"
+      "text": "Mają znacznie mniejszą powierzchnię ataku dzięki mniejszej liczbie pakietów"
     },
     {
       "id": "c",
-      "text": "They automatically configure NetworkPolicies for the pod"
+      "text": "Automatycznie konfigurują NetworkPolicies dla poda"
     },
     {
       "id": "d",
-      "text": "They guarantee that the container will not run as root"
+      "text": "Gwarantują, że kontener nie będzie uruchamiany jako root"
     }
   ],
   "correct_option": "b",
-  "explanation": "Minimal images like Alpine or Distroless contain only the bare minimum files and dependencies needed to run the application. This drastically reduces the attack surface and the number of potential CVEs.",
+  "explanation": "Minimalne obrazy jak Alpine lub Distroless zawierają absolutne minimum plików i zależności potrzebnych do uruchomienia aplikacji. Drastycznie redukuje to powierzchnię ataku i liczbę potencjalnych CVE.",
   "hints": [],
   "setup_commands": [],
   "default_namespace": "default",

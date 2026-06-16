@@ -1,15 +1,15 @@
 {
   "id": "resource-quota-ns",
-  "title": "ResourceQuota for a Namespace",
+  "title": "ResourceQuota dla przestrzeni nazw",
   "category": "Cluster Administration",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## ResourceQuota for a Namespace\n\nResourceQuotas enforce aggregate resource constraints per namespace, preventing any single team from consuming all cluster resources.\n\n**Your task:**\n\n1. Create a namespace named `team-quota`\n2. Create a **ResourceQuota** named `compute-quota` in `team-quota` that limits:\n   - `pods`: `5`\n   - `requests.cpu`: `\"1\"`\n   - `requests.memory`: `\"500Mi\"`",
+  "description": "## ResourceQuota dla przestrzeni nazw\n\nResourceQuota wymusza agregowane ograniczenia zasobów per przestrzeń nazw, uniemożliwiając pojedynczemu zespołowi zużywanie wszystkich zasobów klastra.\n\n**Twoje zadanie:**\n\n1. Utwórz przestrzeń nazw o nazwie `team-quota`\n2. Utwórz **ResourceQuota** o nazwie `compute-quota` w `team-quota` ograniczającą:\n   - `pods`: `5`\n   - `requests.cpu`: `\"1\"`\n   - `requests.memory`: `\"500Mi\"`",
   "hints": [
     {
-      "title": "Create the ResourceQuota",
-      "body": "Use `kubectl create resourcequota` with `--hard` flag or apply a YAML manifest.",
+      "title": "Utwórz ResourceQuota",
+      "body": "Użyj `kubectl create resourcequota` z flagą `--hard` lub zastosuj manifest YAML.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: ResourceQuota\nmetadata:\n  name: compute-quota\n  namespace: team-quota\nspec:\n  hard:\n    pods: \"5\"\n    requests.cpu: \"1\"\n    requests.memory: \"500Mi\"\nEOF"
     }
   ],
@@ -17,19 +17,19 @@
   "validation": {
     "commands": [
       {
-        "description": "ResourceQuota 'compute-quota' exists in team-quota",
+        "description": "ResourceQuota 'compute-quota' istnieje w team-quota",
         "command": "kubectl get resourcequota compute-quota -n team-quota -o jsonpath='{.metadata.name}'",
         "expected_output": "compute-quota",
         "match": "exact"
       },
       {
-        "description": "Pod limit is 5",
+        "description": "Limit podów wynosi 5",
         "command": "kubectl get resourcequota compute-quota -n team-quota -o jsonpath='{.spec.hard.pods}'",
         "expected_output": "5",
         "match": "exact"
       },
       {
-        "description": "CPU request limit is 1",
+        "description": "Limit żądań CPU wynosi 1",
         "command": "kubectl get resourcequota compute-quota -n team-quota -o jsonpath='{.spec.hard.requests\\.cpu}'",
         "expected_output": "1",
         "match": "exact"

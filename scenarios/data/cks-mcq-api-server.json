@@ -1,11 +1,11 @@
 {
   "id": "cks-mcq-api-server",
-  "title": "API Server Authentication",
+  "title": "Uwierzytelnianie API Server",
   "category": "Cluster Setup",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 2,
-  "description": "To secure the `kube-apiserver`, you should prevent unauthorized users from interacting with the cluster anonymously. Which flag is used to disable anonymous authentication on the API server?",
+  "description": "Aby zabezpieczyć `kube-apiserver`, należy uniemożliwić nieautoryzowanym użytkownikom anonimowe interakcje z klastrem. Której flagi używa się do wyłączenia uwierzytelniania anonimowego na serwerze API?",
   "options": [
     {
       "id": "a",
@@ -25,7 +25,7 @@
     }
   ],
   "correct_option": "b",
-  "explanation": "The `--anonymous-auth=false` flag instructs the kube-apiserver to reject any request that is not associated with a known user or service account. By default, it is enabled.",
+  "explanation": "Flaga `--anonymous-auth=false` instruuje kube-apiserver, aby odrzucał wszelkie żądania, które nie są powiązane ze znany użytkownikiem lub kontem serwisowym. Domyślnie jest włączona.",
   "hints": [],
   "setup_commands": [],
   "default_namespace": "default",

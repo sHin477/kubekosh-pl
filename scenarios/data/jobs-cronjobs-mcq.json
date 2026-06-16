@@ -1,35 +1,35 @@
 {
   "id": "jobs-cronjobs-mcq",
-  "title": "Jobs vs CronJobs",
+  "title": "Jobs a CronJobs — różnice",
   "category": "Workloads",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 3,
-  "description": "## Jobs vs CronJobs\n\nA data-processing team needs to run a database backup script **every night at midnight**. Which Kubernetes resource should they use, and why?",
+  "description": "## Jobs a CronJobs\n\nZespół przetwarzania danych musi uruchamiać skrypt kopii zapasowej bazy danych **każdej nocy o północy**. Którego zasobu Kubernetes powinni użyć i dlaczego?",
   "options": [
     {
       "id": "a",
-      "text": "A `Job` — because Jobs run a task until it completes successfully, including on a nightly schedule"
+      "text": "Job — ponieważ Joby uruchamiają zadanie do pomyślnego zakończenia, w tym według harmonogramu nocnego"
     },
     {
       "id": "b",
-      "text": "A `CronJob` — because it creates Jobs on a time-based schedule (cron syntax) and is designed for recurring tasks"
+      "text": "CronJob — ponieważ tworzy Joby według harmonogramu opartego na czasie (składnia cron) i jest zaprojektowany do powtarzających się zadań"
     },
     {
       "id": "c",
-      "text": "A `Deployment` with `restartPolicy: OnFailure` — deployments keep tasks running on schedule"
+      "text": "Deployment z `restartPolicy: OnFailure` — Deploymenty utrzymują zadania działające według harmonogramu"
     },
     {
       "id": "d",
-      "text": "A `DaemonSet` — because it ensures exactly one backup process per node nightly"
+      "text": "DaemonSet — ponieważ zapewnia dokładnie jeden proces kopii zapasowej na węzeł każdej nocy"
     }
   ],
   "correct_option": "b",
-  "explanation": "A **CronJob** is the right resource for recurring scheduled tasks. It uses standard cron syntax (e.g. `0 0 * * *` for midnight daily) and creates a new `Job` object at each scheduled time. A plain `Job` runs once to completion — you would need external scheduling to run it nightly. Deployments are for long-running services, and DaemonSets run pods on every node.",
+  "explanation": "**CronJob** to właściwy zasób do powtarzających się zaplanowanych zadań. Używa standardowej składni cron (np. `0 0 * * *` dla każdej nocy o północy) i tworzy nowy obiekt `Job` o każdej zaplanowanej godzinie. Zwykły `Job` uruchamia się raz do zakończenia — potrzebujesz zewnętrznego harmonogramowania, aby uruchamiać go co noc. Deploymenty są dla długo działających serwisów, a DaemonSety uruchamiają pody na każdym węźle.",
   "hints": [
     {
-      "title": "CronJob syntax",
-      "body": "CronJobs use standard cron format: `minute hour day-of-month month day-of-week`. For midnight daily: `0 0 * * *`.",
+      "title": "Składnia CronJob",
+      "body": "CronJoby używają standardowego formatu cron: `minuta godzina dzień-miesiąca miesiąc dzień-tygodnia`. Dla każdej nocy o północy: `0 0 * * *`.",
       "command": "kubectl explain cronjob.spec.schedule"
     }
   ],

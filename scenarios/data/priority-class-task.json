@@ -1,20 +1,20 @@
 {
   "id": "priority-class-task",
-  "title": "Pod Priority and PriorityClass",
+  "title": "Priorytety Podów i PriorityClass",
   "category": "Workloads & Scheduling",
   "difficulty": "Medium",
   "type": "task",
   "weight": 6,
-  "description": "## Pod Priority and PriorityClass\n\n**PriorityClasses** assign a numeric priority to pods. When cluster resources are scarce, the scheduler preempts lower-priority pods to make room for higher-priority ones. This is a CKA exam topic.\n\n**Your task:**\n\n1. Create a **PriorityClass** named `high-priority` with:\n   - `value: 1000000`\n   - `globalDefault: false`\n   - `description: \"High priority workloads\"`\n2. Create a Pod named `critical-pod` using `nginx:alpine` that references the `high-priority` PriorityClass via `spec.priorityClassName`\n\n```bash\n# Verify:\nkubectl get priorityclass high-priority\nkubectl get pod critical-pod -o jsonpath='{.spec.priorityClassName}'\n```",
+  "description": "## Priorytety Podów i PriorityClass\n\n**PriorityClass** przypisuje numeryczny priorytet podom. Gdy zasoby klastra są ograniczone, scheduler wywłaszcza pody o niższym priorytecie, aby zrobić miejsce dla tych o wyższym. To jest temat egzaminu CKA.\n\n**Twoje zadanie:**\n\n1. Utwórz **PriorityClass** o nazwie `high-priority` z:\n   - `value: 1000000`\n   - `globalDefault: false`\n   - `description: \"High priority workloads\"`\n2. Utwórz Pod o nazwie `critical-pod` używający `nginx:alpine`, który odwołuje się do PriorityClass `high-priority` przez `spec.priorityClassName`\n\n```bash\n# Weryfikacja:\nkubectl get priorityclass high-priority\nkubectl get pod critical-pod -o jsonpath='{.spec.priorityClassName}'\n```",
   "hints": [
     {
-      "title": "Create the PriorityClass",
-      "body": "PriorityClass is a cluster-scoped resource (not namespaced). Higher value = higher priority.",
+      "title": "Utwórz PriorityClass",
+      "body": "PriorityClass to zasób o zasięgu klastra (nie przestrzeni nazw). Wyższa wartość = wyższy priorytet.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: scheduling.k8s.io/v1\nkind: PriorityClass\nmetadata:\n  name: high-priority\nvalue: 1000000\nglobalDefault: false\ndescription: \"High priority workloads\"\nEOF"
     },
     {
-      "title": "Reference PriorityClass in a Pod",
-      "body": "Set `spec.priorityClassName` in the pod spec to the name of your PriorityClass.",
+      "title": "Odwołaj się do PriorityClass w Podzie",
+      "body": "Ustaw `spec.priorityClassName` w spec poda na nazwę twojej PriorityClass.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: critical-pod\nspec:\n  priorityClassName: high-priority\n  containers:\n  - name: app\n    image: nginx:alpine\nEOF"
     }
   ],
@@ -22,31 +22,31 @@
   "validation": {
     "commands": [
       {
-        "description": "PriorityClass 'high-priority' exists",
+        "description": "PriorityClass 'high-priority' istnieje",
         "command": "kubectl get priorityclass high-priority -o jsonpath='{.metadata.name}'",
         "expected_output": "high-priority",
         "match": "exact"
       },
       {
-        "description": "PriorityClass value is 1000000",
+        "description": "Wartość PriorityClass wynosi 1000000",
         "command": "kubectl get priorityclass high-priority -o jsonpath='{.value}'",
         "expected_output": "1000000",
         "match": "exact"
       },
       {
-        "description": "globalDefault value is false",
+        "description": "globalDefault jest false",
         "command": "kubectl get priorityclass high-priority -o jsonpath='{.globalDefault}' | grep -v '^$' || echo false",
         "expected_output": "false",
         "match": "exact"
       },
       {
-        "description": "Pod 'critical-pod' uses high-priority PriorityClass",
+        "description": "Pod 'critical-pod' używa PriorityClass high-priority",
         "command": "kubectl get pod critical-pod -o jsonpath='{.spec.priorityClassName}'",
         "expected_output": "high-priority",
         "match": "exact"
       },
       {
-        "description": "Pod 'critical-pod' is Running",
+        "description": "Pod 'critical-pod' jest Running",
         "command": "kubectl get pod critical-pod -o jsonpath='{.status.phase}'",
         "expected_output": "Running",
         "match": "exact"

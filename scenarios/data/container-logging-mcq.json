@@ -1,11 +1,11 @@
 {
   "id": "container-logging-mcq",
-  "title": "Container Logging and Monitoring",
+  "title": "Logowanie i monitorowanie kontenerów",
   "category": "Troubleshooting",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 3,
-  "description": "## Container Logging and Monitoring\n\nA pod `worker-abc` has crashed and restarted. You want to see the logs from the **previous** (crashed) container instance, not the current one.\n\nWhich command retrieves logs from the previously crashed container?",
+  "description": "## Logowanie i monitorowanie kontenerów\n\nPod `worker-abc` uległ awarii i uruchomił się ponownie. Chcesz zobaczyć logi z **poprzedniej** (rozbitej) instancji kontenera, nie obecnej.\n\nKtóra komenda pobiera logi z poprzedniego, rozbitego kontenera?",
   "options": [
     {
       "id": "a",
@@ -25,11 +25,11 @@
     }
   ],
   "correct_option": "b",
-  "explanation": "`kubectl logs <pod> --previous` (or `-p`) retrieves logs from the **terminated previous container** instance in a pod. This is critical for debugging CrashLoopBackOff scenarios where the container restarts before you can inspect its logs. `--all-containers` shows logs from all containers in the current run. `kubectl describe` shows events and status but not stdout/stderr logs.",
+  "explanation": "`kubectl logs <pod> --previous` (lub `-p`) pobiera logi z **zakończonej poprzedniej instancji** kontenera w podzie. Jest to kluczowe do debugowania scenariuszy CrashLoopBackOff, gdzie kontener restartuje się zanim zdążysz sprawdzić logi. `--all-containers` pokazuje logi ze wszystkich kontenerów bieżącego uruchomienia. `kubectl describe` pokazuje zdarzenia i status, ale nie logi stdout/stderr.",
   "hints": [
     {
-      "title": "Useful kubectl logs flags",
-      "body": "`--previous`/`-p`: previous container | `--follow`/`-f`: stream | `--since=1h`: last hour | `--tail=50`: last 50 lines | `--timestamps`: show timestamps",
+      "title": "Przydatne flagi kubectl logs",
+      "body": "`--previous`/`-p`: poprzedni kontener | `--follow`/`-f`: strumieniowanie | `--since=1h`: ostatnia godzina | `--tail=50`: ostatnie 50 linii | `--timestamps`: pokaż znaczniki czasu",
       "command": "kubectl logs worker-abc --previous --tail=50"
     }
   ],

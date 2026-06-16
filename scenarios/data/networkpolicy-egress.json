@@ -1,15 +1,15 @@
 {
   "id": "networkpolicy-egress",
-  "title": "Egress NetworkPolicy",
+  "title": "NetworkPolicy dla ruchu wychodzącego (Egress)",
   "category": "Security",
   "difficulty": "Hard",
   "type": "task",
   "weight": 8,
-  "description": "## Egress NetworkPolicy\n\nEgress NetworkPolicies control **outbound** traffic from pods. By default, all egress is allowed; once you apply an egress policy to a pod, only explicitly allowed egress is permitted.\n\n**Your task:**\n\nCreate a NetworkPolicy named `restrict-egress` in the `default` namespace that:\n- Applies to pods with label `role=isolated`\n- Allows **egress only to pods with label `role=allowed`** on port `80`\n- Blocks all other egress",
+  "description": "## NetworkPolicy Egress\n\nNegress NetworkPolicy kontroluje **ruch wychodzący** z podów. Domyślnie cały egress jest dozwolony; gdy zastosujesz politykę egress do poda, dozwolony jest tylko jawnie określony egress.\n\n**Twoje zadanie:**\n\nUtwórz NetworkPolicy o nazwie `restrict-egress` w przestrzeni nazw `default`, która:\n- Stosuje się do podów z etykietą `role=isolated`\n- Zezwala na **egress tylko do podów z etykietą `role=allowed`** na porcie `80`\n- Blokuje cały inny egress",
   "hints": [
     {
-      "title": "Egress NetworkPolicy structure",
-      "body": "Set `spec.policyTypes: [Egress]` and define `spec.egress[]` with `to` and `ports`. Omitting a type means it's not affected.",
+      "title": "Struktura NetworkPolicy Egress",
+      "body": "Ustaw `spec.policyTypes: [Egress]` i zdefiniuj `spec.egress[]` z `to` i `ports`. Pominięcie typu oznacza brak wpływu na ten typ ruchu.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: restrict-egress\n  namespace: default\nspec:\n  podSelector:\n    matchLabels:\n      role: isolated\n  policyTypes:\n  - Egress\n  egress:\n  - to:\n    - podSelector:\n        matchLabels:\n          role: allowed\n    ports:\n    - protocol: TCP\n      port: 80\nEOF"
     }
   ],
@@ -17,25 +17,25 @@
   "validation": {
     "commands": [
       {
-        "description": "NetworkPolicy 'restrict-egress' exists",
+        "description": "NetworkPolicy 'restrict-egress' istnieje",
         "command": "kubectl get networkpolicy restrict-egress -o jsonpath='{.metadata.name}'",
         "expected_output": "restrict-egress",
         "match": "exact"
       },
       {
-        "description": "Policy applies to role=isolated pods",
+        "description": "Polityka stosuje się do podów role=isolated",
         "command": "kubectl get networkpolicy restrict-egress -o jsonpath='{.spec.podSelector.matchLabels.role}'",
         "expected_output": "isolated",
         "match": "exact"
       },
       {
-        "description": "Policy type includes Egress",
+        "description": "Typ polityki zawiera Egress",
         "command": "kubectl get networkpolicy restrict-egress -o jsonpath='{.spec.policyTypes[*]}'",
         "expected_output": "Egress",
         "match": "contains"
       },
       {
-        "description": "Egress allowed to role=allowed pods",
+        "description": "Egress dozwolony do podów role=allowed",
         "command": "kubectl get networkpolicy restrict-egress -o jsonpath='{.spec.egress[0].to[0].podSelector.matchLabels.role}'",
         "expected_output": "allowed",
         "match": "exact"

@@ -1,35 +1,35 @@
 {
   "id": "kubectl-output-format-mcq",
-  "title": "kubectl Output Formats",
+  "title": "Formaty wyjścia kubectl",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 2,
-  "description": "## kubectl Output Formats\n\nYou need to retrieve the **full live manifest** of a running deployment named `frontend` in YAML format so you can save it to a file for version control.\n\nWhich command produces the correct output?",
+  "description": "## Formaty wyjścia kubectl\n\nMusisz pobrać **pełny aktywny manifest** działającego Deployment o nazwie `frontend` w formacie YAML, aby zapisać go do pliku do kontroli wersji.\n\nKtóra komenda daje poprawny wynik?",
   "options": [
     {
       "id": "a",
-      "text": "`kubectl describe deployment frontend` — prints a human-readable summary with events"
+      "text": "`kubectl describe deployment frontend` — wyświetla czytelne podsumowanie ze zdarzeniami"
     },
     {
       "id": "b",
-      "text": "`kubectl get deployment frontend -o yaml` — prints the full manifest in YAML format"
+      "text": "`kubectl get deployment frontend -o yaml` — wyświetla pełny manifest w formacie YAML"
     },
     {
       "id": "c",
-      "text": "`kubectl export deployment frontend` — exports a portable manifest (removed in k8s 1.18)"
+      "text": "`kubectl export deployment frontend` — eksportuje przenośny manifest (usunięty w k8s 1.18)"
     },
     {
       "id": "d",
-      "text": "`kubectl manifest deployment frontend` — a built-in command for generating manifests"
+      "text": "`kubectl manifest deployment frontend` — wbudowana komenda do generowania manifestów"
     }
   ],
   "correct_option": "b",
-  "explanation": "`kubectl get <resource> -o yaml` (or `--output=yaml`) prints the full live manifest as YAML, including all managed fields. `kubectl describe` gives a human-readable summary with events — not a re-applicable YAML manifest. `kubectl export` was removed in Kubernetes 1.18. `kubectl manifest` does not exist. Use `-o json` for JSON output, or `-o jsonpath='...'` to extract specific fields. To save to a file: `kubectl get deployment frontend -o yaml > frontend.yaml`.",
+  "explanation": "`kubectl get <resource> -o yaml` (lub `--output=yaml`) wyświetla pełny aktywny manifest jako YAML, wraz ze wszystkimi zarządzanymi polami. `kubectl describe` daje czytelne podsumowanie ze zdarzeniami — nie jest to możliwy do ponownego zastosowania manifest YAML. `kubectl export` został usunięty w Kubernetes 1.18. `kubectl manifest` nie istnieje. Użyj `-o json` dla wyjścia JSON, lub `-o jsonpath='...'` do wyciągania konkretnych pól. Aby zapisać do pliku: `kubectl get deployment frontend -o yaml > frontend.yaml`.",
   "hints": [
     {
-      "title": "Output format flags",
-      "body": "The `-o` / `--output` flag controls format: `-o yaml`, `-o json`, `-o wide` (extra columns), `-o name` (just the resource name), `-o jsonpath='...'` (field extraction).",
+      "title": "Flagi formatu wyjścia",
+      "body": "Flaga `-o` / `--output` steruje formatem: `-o yaml`, `-o json`, `-o wide` (dodatkowe kolumny), `-o name` (tylko nazwa zasobu), `-o jsonpath='...'` (ekstrakcja pola).",
       "command": "kubectl get deployment frontend -o yaml"
     }
   ],

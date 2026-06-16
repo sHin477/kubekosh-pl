@@ -1,20 +1,20 @@
 {
   "id": "crashloop-fix",
-  "title": "Fix a CrashLoopBackOff Pod",
+  "title": "Naprawianie poda w stanie CrashLoopBackOff",
   "category": "Troubleshooting",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## Fix a CrashLoopBackOff\n\nA deployment `crash-app` is in `CrashLoopBackOff` because it was deployed with a broken command.\n\n**Your task:**\n\nFix the `crash-app` deployment so all pods run successfully. The container should run `nginx -g 'daemon off;'` (the default nginx command). Update the deployment to remove the broken command override.\n\n```bash\n# Check what's wrong:\nkubectl describe deployment crash-app\nkubectl logs -l app=crash-app\n```",
+  "description": "## Naprawianie stanu CrashLoopBackOff\n\nDeployment `crash-app` jest w stanie `CrashLoopBackOff`, ponieważ został wdrożony z błędną komendą.\n\n**Twoje zadanie:**\n\nNapraw Deployment `crash-app` tak, aby wszystkie pody działały poprawnie. Kontener powinien uruchamiać `nginx -g 'daemon off;'` (domyślna komenda nginx). Zaktualizuj Deployment, usuwając błędne nadpisanie komendy.\n\n```bash\n# Sprawdź co jest nie tak:\nkubectl describe deployment crash-app\nkubectl logs -l app=crash-app\n```",
   "hints": [
     {
-      "title": "Remove the broken command",
-      "body": "Use `kubectl patch` or `kubectl edit deployment crash-app`. Remove the `command` override so nginx uses its default entrypoint.",
+      "title": "Usuń błędną komendę",
+      "body": "Użyj `kubectl patch` lub `kubectl edit deployment crash-app`. Usuń nadpisanie `command`, aby nginx używał swojego domyślnego entrypointa.",
       "command": "kubectl patch deployment crash-app --type=json -p='[{\"op\":\"remove\",\"path\":\"/spec/template/spec/containers/0/command\"}]'"
     },
     {
-      "title": "Alternative: kubectl set",
-      "body": "You can also edit the deployment directly and delete the command field.",
+      "title": "Alternatywa: kubectl edit",
+      "body": "Możesz też edytować Deployment bezpośrednio i usunąć pole command.",
       "command": "kubectl edit deployment crash-app"
     }
   ],
@@ -29,7 +29,7 @@
   "validation": {
     "commands": [
       {
-        "description": "Deployment 'crash-app' has 1 ready replica",
+        "description": "Deployment 'crash-app' ma 1 gotową replikę",
         "command": "kubectl get deployment crash-app -o jsonpath='{.status.readyReplicas}' 2>/dev/null | grep -v '^$' || echo 0",
         "expected_output": "1",
         "match": "exact"

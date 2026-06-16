@@ -1,40 +1,40 @@
 {
   "id": "pod-basics-mcq",
-  "title": "Pod Lifecycle States",
+  "title": "Stany cyklu życia Poda",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 3,
-  "description": "## What does the `CrashLoopBackOff` status mean for a Pod?\n\nYou observe the following when running `kubectl get pods`:\n\n```\nNAME          READY   STATUS             RESTARTS   AGE\nmy-app-xyz    0/1     CrashLoopBackOff   5          3m\n```\n\nWhat is the Kubernetes control plane communicating with this status?",
+  "description": "## Co oznacza status `CrashLoopBackOff` dla Poda?\n\nObserwujesz następujący wynik po uruchomieniu `kubectl get pods`:\n\n```\nNAME          READY   STATUS             RESTARTS   AGE\nmy-app-xyz    0/1     CrashLoopBackOff   5          3m\n```\n\nCo komunikuje płaszczyzna sterowania Kubernetes tym statusem?",
   "options": [
     {
       "id": "a",
-      "text": "The pod image could not be pulled from the container registry"
+      "text": "Nie można pobrać obrazu poda z rejestru kontenerów"
     },
     {
       "id": "b",
-      "text": "The container starts, crashes, and Kubernetes keeps restarting it with exponential backoff delay"
+      "text": "Kontener uruchamia się, rozbija, a Kubernetes ciągle go restartuje z wykładniczym opóźnieniem (backoff)"
     },
     {
       "id": "c",
-      "text": "The pod is waiting for a PersistentVolume to become available"
+      "text": "Pod oczekuje na dostępność PersistentVolume"
     },
     {
       "id": "d",
-      "text": "The pod has been evicted from the node due to resource pressure"
+      "text": "Pod został usunięty z węzła z powodu presji zasobów"
     }
   ],
   "correct_option": "b",
-  "explanation": "`CrashLoopBackOff` means the container is repeatedly crashing after startup. Kubernetes restarts it automatically but introduces increasing delays (backoff) between attempts to avoid overwhelming the system. Common causes include a bad entrypoint command, missing environment variables, or application errors on startup.",
+  "explanation": "`CrashLoopBackOff` oznacza, że kontener wielokrotnie rozbija się po uruchomieniu. Kubernetes restartuje go automatycznie, ale wprowadza rosnące opóźnienia (backoff) między próbami, aby nie przeciążać systemu. Częste przyczyny to błędna komenda entrypoint, brakujące zmienne środowiskowe lub błędy aplikacji przy starcie.",
   "hints": [
     {
-      "title": "Interpreting pod status",
-      "body": "Use `kubectl describe pod <name>` to see the Events section — it shows exactly why the container is failing.",
+      "title": "Interpretacja statusu poda",
+      "body": "Użyj `kubectl describe pod <name>`, aby zobaczyć sekcję Events — pokazuje dokładnie dlaczego kontener zawodzi.",
       "command": "kubectl describe pod my-app-xyz"
     },
     {
-      "title": "Reading container logs",
-      "body": "Even a crashed container leaves logs behind. Use `--previous` to read the logs from the last crash.",
+      "title": "Odczytywanie logów kontenera",
+      "body": "Nawet rozbity kontener zostawia logi. Użyj `--previous`, aby odczytać logi z ostatniego rozbicia.",
       "command": "kubectl logs my-app-xyz --previous"
     }
   ],

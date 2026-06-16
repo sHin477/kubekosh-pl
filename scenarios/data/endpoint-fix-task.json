@@ -1,25 +1,25 @@
 {
   "id": "endpoint-fix-task",
-  "title": "Fix a Broken Service Selector",
+  "title": "Naprawianie selektora Service",
   "category": "Troubleshooting",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## Fix a Broken Service Selector\n\nA service `my-svc` has been created but no traffic reaches the pods. The pods are labelled `app=backend`, but the service selector is misconfigured.\n\n**Your task:**\n\nFix the `my-svc` service selector so it correctly targets the `backend` pods.\n\n```bash\n# Investigate:\nkubectl describe service my-svc\nkubectl get endpoints my-svc\nkubectl get pods --show-labels\n```",
+  "description": "## Naprawianie błędnego selektora Service\n\nService `my-svc` został utworzony, ale żaden ruch nie dociera do podów. Pody mają etykietę `app=backend`, ale selektor serwisu jest błędnie skonfigurowany.\n\n**Twoje zadanie:**\n\nNapraw selektor Service `my-svc`, aby poprawnie wskazywał na pody `backend`.\n\n```bash\n# Zbadaj problem:\nkubectl describe service my-svc\nkubectl get endpoints my-svc\nkubectl get pods --show-labels\n```",
   "hints": [
     {
-      "title": "Identify the mismatch",
-      "body": "Check what label the pods actually carry, then compare it against the service selector.",
+      "title": "Zidentyfikuj niezgodność",
+      "body": "Sprawdź jaką etykietę faktycznie mają pody, a następnie porównaj ją z selektorem serwisu.",
       "command": "kubectl get pods --show-labels && kubectl get service my-svc -o jsonpath='{.spec.selector}'"
     },
     {
-      "title": "Patch the service selector",
-      "body": "The pods carry `app=backend` but the service selector says `app=wrong-label`. Use `kubectl patch` to point the selector at the correct label.",
+      "title": "Napraw selektor serwisu",
+      "body": "Pody mają `app=backend`, ale selektor serwisu mówi `app=wrong-label`. Użyj `kubectl patch`, aby wskazać selektor na właściwą etykietę.",
       "command": "kubectl patch service my-svc --type=json -p='[{\"op\":\"replace\",\"path\":\"/spec/selector/app\",\"value\":\"backend\"}]'"
     },
     {
-      "title": "Verify endpoints are populated",
-      "body": "After fixing the selector, Kubernetes will automatically update the endpoint slice. Confirm the service now has live pod addresses.",
+      "title": "Zweryfikuj wypełnienie endpointów",
+      "body": "Po naprawieniu selektora Kubernetes automatycznie zaktualizuje endpoint slice. Potwierdź, że serwis ma teraz żywe adresy podów.",
       "command": "kubectl get endpoints my-svc"
     }
   ],
@@ -34,13 +34,13 @@
   "validation": {
     "commands": [
       {
-        "description": "Service 'my-svc' selector is app=backend",
+        "description": "Selektor Service 'my-svc' to app=backend",
         "command": "kubectl get service my-svc -o jsonpath='{.spec.selector.app}'",
         "expected_output": "backend",
         "match": "exact"
       },
       {
-        "description": "Endpoints exist for my-svc",
+        "description": "Endpointy istnieją dla my-svc",
         "command": "kubectl get endpoints my-svc -o jsonpath='{.subsets[0].addresses[0].ip}' 2>/dev/null | grep -v '^$' || echo empty",
         "expected_output": "empty",
         "match": "not_contains"

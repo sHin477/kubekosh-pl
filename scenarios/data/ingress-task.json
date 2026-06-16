@@ -1,15 +1,15 @@
 {
   "id": "ingress-task",
-  "title": "Create an Ingress Resource",
+  "title": "Tworzenie zasobu Ingress",
   "category": "Services & Networking",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## Create an Ingress Resource\n\nIngress exposes HTTP/HTTPS routes from outside the cluster to services within it. k3s includes Traefik as its default Ingress controller.\n\n**Your task:**\n\nA deployment `web-app` and service `web-svc` (port 80) already exist. Create an **Ingress** named `web-ingress` that:\n- Routes traffic for host `app.lab.local`\n- Path `/` → service `web-svc` on port `80`\n- Uses `pathType: Prefix`",
+  "description": "## Tworzenie zasobu Ingress\n\nIngress udostępnia trasy HTTP/HTTPS z zewnątrz klastra do serwisów wewnątrz niego. k3s zawiera Traefik jako domyślny kontroler Ingress.\n\n**Twoje zadanie:**\n\nDeployment `web-app` i serwis `web-svc` (port 80) już istnieją. Utwórz **Ingress** o nazwie `web-ingress`, który:\n- Kieruje ruch dla hosta `app.lab.local`\n- Ścieżka `/` → serwis `web-svc` na porcie `80`\n- Używa `pathType: Prefix`",
   "hints": [
     {
-      "title": "Ingress manifest",
-      "body": "Use `networking.k8s.io/v1` for the Ingress API. Define `spec.rules[].host` and `spec.rules[].http.paths[]`.",
+      "title": "Manifest Ingress",
+      "body": "Użyj `networking.k8s.io/v1` dla API Ingress. Zdefiniuj `spec.rules[].host` i `spec.rules[].http.paths[]`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: web-ingress\nspec:\n  rules:\n  - host: app.lab.local\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: web-svc\n            port:\n              number: 80\nEOF"
     }
   ],
@@ -24,19 +24,19 @@
   "validation": {
     "commands": [
       {
-        "description": "Ingress 'web-ingress' exists",
+        "description": "Ingress 'web-ingress' istnieje",
         "command": "kubectl get ingress web-ingress -o jsonpath='{.metadata.name}'",
         "expected_output": "web-ingress",
         "match": "exact"
       },
       {
-        "description": "Ingress host is app.lab.local",
+        "description": "Host Ingress to app.lab.local",
         "command": "kubectl get ingress web-ingress -o jsonpath='{.spec.rules[0].host}'",
         "expected_output": "app.lab.local",
         "match": "exact"
       },
       {
-        "description": "Backend service is web-svc",
+        "description": "Serwis backend to web-svc",
         "command": "kubectl get ingress web-ingress -o jsonpath='{.spec.rules[0].http.paths[0].backend.service.name}'",
         "expected_output": "web-svc",
         "match": "exact"

@@ -1,11 +1,11 @@
 {
   "id": "kubectl-essentials-mcq",
-  "title": "Essential kubectl Commands",
+  "title": "Podstawowe polecenia kubectl",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 2,
-  "description": "## Essential kubectl Commands\n\nYou need to quickly view the **logs** of a container named `api` inside a pod named `backend-7d9f`. The pod has multiple containers.\n\nWhich command is correct?",
+  "description": "## Podstawowe polecenia kubectl\n\nMusisz szybko wyświetlić **logi** kontenera o nazwie `api` wewnątrz poda o nazwie `backend-7d9f`. Pod ma wiele kontenerów.\n\nKtóra komenda jest poprawna?",
   "options": [
     {
       "id": "a",
@@ -25,11 +25,11 @@
     }
   ],
   "correct_option": "c",
-  "explanation": "When a pod has **multiple containers**, you must specify which container's logs you want using the `-c <container-name>` flag: `kubectl logs <pod-name> -c <container-name>`. Without `-c`, kubectl returns an error if the pod has more than one container. `kubectl describe` shows metadata and events, not live logs. `kubectl exec` can work but is cumbersome and container-runtime dependent.",
+  "explanation": "Gdy pod ma **wiele kontenerów**, musisz określić czyje logi chcesz używając flagi `-c <container-name>`: `kubectl logs <pod-name> -c <container-name>`. Bez `-c` kubectl zwróci błąd jeśli pod ma więcej niż jeden kontener. `kubectl describe` pokazuje metadane i zdarzenia, nie żywe logi. `kubectl exec` może działać, ale jest uciążliwe i zależne od środowiska uruchomieniowego kontenera.",
   "hints": [
     {
-      "title": "kubectl logs flags",
-      "body": "Key flags: `-c` (container name for multi-container pods), `-f` (follow/stream), `--previous` (crashed container logs), `--since=1h` (time filter).",
+      "title": "Flagi kubectl logs",
+      "body": "Kluczowe flagi: `-c` (nazwa kontenera dla podów wielokontenerowych), `-f` (strumieniowanie), `--previous` (logi rozbitego kontenera), `--since=1h` (filtr czasowy).",
       "command": "kubectl logs --help | head -30"
     }
   ],

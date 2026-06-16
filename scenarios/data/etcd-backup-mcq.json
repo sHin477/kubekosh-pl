@@ -1,15 +1,15 @@
 {
   "id": "etcd-backup-mcq",
-  "title": "etcd Backup and Restore",
+  "title": "Tworzenie kopii zapasowej i przywracanie etcd",
   "category": "Cluster Administration",
   "difficulty": "Hard",
   "type": "mcq",
   "weight": 5,
-  "description": "## etcd Backup and Restore\n\nIn the CKA exam, you may need to back up and restore an etcd cluster. Which command correctly creates an etcd snapshot?\n\n```bash\n# The etcdctl binary is available on the control-plane node.\n# Assume certificates are at /etc/kubernetes/pki/etcd/\n```",
+  "description": "## Kopia zapasowa i przywracanie etcd\n\nNa egzaminie CKA możesz potrzebować wykonać kopię zapasową i przywrócić klaster etcd. Która komenda poprawnie tworzy migawkę etcd?\n\n```bash\n# Narzędzie etcdctl jest dostępne na węźle płaszczyzny sterowania.\n# Zakładamy, że certyfikaty są w /etc/kubernetes/pki/etcd/\n```",
   "options": [
     {
       "id": "a",
-      "text": "`etcdctl snapshot save /backup/etcd.db` (no flags needed — etcdctl auto-detects certs)"
+      "text": "`etcdctl snapshot save /backup/etcd.db` (bez flag — etcdctl automatycznie wykrywa certyfikaty)"
     },
     {
       "id": "b",
@@ -25,11 +25,11 @@
     }
   ],
   "correct_option": "b",
-  "explanation": "etcd requires **TLS certificates** and explicit endpoint specification. You must set `ETCDCTL_API=3`, point to the etcd endpoint (`https://127.0.0.1:2379` on control-plane), and provide the CA cert, server cert, and key from `/etc/kubernetes/pki/etcd/`. To restore: `ETCDCTL_API=3 etcdctl snapshot restore /backup/etcd.db --data-dir=/var/lib/etcd-restored`, then update the etcd static pod manifest to point to the new data dir.",
+  "explanation": "etcd wymaga **certyfikatów TLS** i jawnego wskazania endpointu. Musisz ustawić `ETCDCTL_API=3`, wskazać endpoint etcd (`https://127.0.0.1:2379` na płaszczyźnie sterowania) i dostarczyć certyfikat CA, certyfikat serwera i klucz z `/etc/kubernetes/pki/etcd/`. Aby przywrócić: `ETCDCTL_API=3 etcdctl snapshot restore /backup/etcd.db --data-dir=/var/lib/etcd-restored`, a następnie zaktualizuj manifest statycznego poda etcd, aby wskazywał na nowy katalog danych.",
   "hints": [
     {
-      "title": "etcdctl API version",
-      "body": "Always set `ETCDCTL_API=3`. etcdctl v2 and v3 APIs are different — the CKA exam uses v3. The certs live at `/etc/kubernetes/pki/etcd/`.",
+      "title": "Wersja API etcdctl",
+      "body": "Zawsze ustawiaj `ETCDCTL_API=3`. API v2 i v3 etcdctl różnią się — egzamin CKA używa v3. Certyfikaty są w `/etc/kubernetes/pki/etcd/`.",
       "command": "ETCDCTL_API=3 etcdctl snapshot status /backup/etcd.db --write-out=table"
     }
   ],

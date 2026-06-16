@@ -1,35 +1,35 @@
 {
   "id": "pod-affinity-mcq",
-  "title": "Pod Affinity vs Anti-Affinity",
+  "title": "Powinowactwo i anty-powinowactwo Podów",
   "category": "Workloads & Scheduling",
   "difficulty": "Medium",
   "type": "mcq",
   "weight": 4,
-  "description": "## Pod Affinity vs Anti-Affinity\n\nYou want to ensure that **cache** pods are always scheduled on the **same node** as the **app** pods they serve (to reduce latency). Which scheduling rule should you use in the cache pod spec?",
+  "description": "## Powinowactwo a anty-powinowactwo Podów\n\nChcesz zapewnić, że pody **cache** są zawsze planowane na **tym samym węźle** co serwowane przez nie pody **app** (aby zmniejszyć opóźnienia). Której reguły planowania użyć w spec poda cache?",
   "options": [
     {
       "id": "a",
-      "text": "`spec.affinity.podAntiAffinity` with `requiredDuringSchedulingIgnoredDuringExecution` matching `app=app-pod`"
+      "text": "`spec.affinity.podAntiAffinity` z `requiredDuringSchedulingIgnoredDuringExecution` dopasowującym `app=app-pod`"
     },
     {
       "id": "b",
-      "text": "`spec.affinity.podAffinity` with `requiredDuringSchedulingIgnoredDuringExecution` matching `app=app-pod`"
+      "text": "`spec.affinity.podAffinity` z `requiredDuringSchedulingIgnoredDuringExecution` dopasowującym `app=app-pod`"
     },
     {
       "id": "c",
-      "text": "`spec.affinity.nodeAffinity` with a `matchExpressions` for the app pod's node label"
+      "text": "`spec.affinity.nodeAffinity` z `matchExpressions` dla etykiety węzła poda app"
     },
     {
       "id": "d",
-      "text": "`spec.tolerations` with `key=app-pod` and `effect=NoSchedule`"
+      "text": "`spec.tolerations` z `key=app-pod` i `effect=NoSchedule`"
     }
   ],
   "correct_option": "b",
-  "explanation": "**Pod Affinity** (`spec.affinity.podAffinity`) attracts pods to nodes where matching pods are already running. Use `requiredDuringSchedulingIgnoredDuringExecution` for a hard constraint (cache pod MUST co-locate with app pod) vs `preferredDuringSchedulingIgnoredDuringExecution` for a soft preference. **Pod Anti-Affinity** does the opposite — spreads pods apart. Tolerations are unrelated to co-location and work with taints.",
+  "explanation": "**Powinowactwo podów** (`spec.affinity.podAffinity`) przyciąga pody do węzłów, na których już działają pasujące pody. Użyj `requiredDuringSchedulingIgnoredDuringExecution` dla twardego ograniczenia (pod cache MUSI współlokalizować się z podem app) vs `preferredDuringSchedulingIgnoredDuringExecution` dla miękkiej preferencji. **Anti-affinit podów** robi odwrotnie — rozkłada pody. Tolerancje nie są związane z kolokacją i działają ze skazami.",
   "hints": [
     {
-      "title": "Affinity types",
-      "body": "podAffinity = attract to same node. podAntiAffinity = repel from same node. nodeAffinity = attract to nodes with specific labels. The `topologyKey: kubernetes.io/hostname` means 'same node'.",
+      "title": "Typy powinowactwa",
+      "body": "podAffinity = przyciągaj do tego samego węzła. podAntiAffinity = odpychaj od tego samego węzła. nodeAffinity = przyciągaj do węzłów z konkretnymi etykietami. `topologyKey: kubernetes.io/hostname` oznacza 'ten sam węzeł'.",
       "command": "kubectl explain pod.spec.affinity.podAffinity"
     }
   ],

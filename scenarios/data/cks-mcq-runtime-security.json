@@ -1,11 +1,11 @@
 {
   "id": "cks-mcq-runtime-security",
-  "title": "Runtime Security Tools",
+  "title": "Narzędzia bezpieczeństwa uruchomieniowego",
   "category": "System Hardening",
   "difficulty": "Medium",
   "type": "mcq",
   "weight": 2,
-  "description": "Which of the following is an open-source tool specifically designed for **runtime security** in Kubernetes (e.g., detecting unexpected behavior or shell execution in running containers)?",
+  "description": "Które z poniższych to narzędzie open-source zaprojektowane specjalnie do **bezpieczeństwa uruchomieniowego** w Kubernetes (np. wykrywanie nieoczekiwanego zachowania lub uruchomienia powłoki w działających kontenerach)?",
   "options": [
     {
       "id": "a",
@@ -25,7 +25,7 @@
     }
   ],
   "correct_option": "c",
-  "explanation": "Falco is a CNCF incubating project that acts as a runtime security tool. It parses Linux system calls at runtime and asserts the stream against a powerful rules engine. Trivy is for image scanning, and kube-bench checks CIS benchmarks.",
+  "explanation": "Falco to projekt CNCF działający jako narzędzie bezpieczeństwa uruchomieniowego. Analizuje wywołania systemowe Linuksa w czasie rzeczywistym i weryfikuje strumień względem silnika reguł. Trivy służy do skanowania obrazów, kube-bench sprawdza zgodność z benchmarkami CIS.",
   "hints": [],
   "setup_commands": [],
   "default_namespace": "default",

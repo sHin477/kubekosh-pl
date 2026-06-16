@@ -1,15 +1,15 @@
 {
   "id": "cks-apparmor-profile",
-  "title": "AppArmor Profiles",
+  "title": "Profile AppArmor",
   "category": "Workload Security",
   "difficulty": "Hard",
   "type": "task",
   "weight": 5,
-  "description": "## AppArmor Profiles\n\nAppArmor is a Linux kernel security module that restricts programs' capabilities. In Kubernetes 1.30+, it is supported natively in the securityContext.\n\n**Your task:**\n\nCreate a Pod named `apparmor-pod` using the `nginx:alpine` image. Configure its Pod-level `securityContext` to use the `RuntimeDefault` AppArmor profile.\n\n```bash\n# Verify the profile is set:\nkubectl get pod apparmor-pod -o yaml | grep appArmor\n```",
+  "description": "## Profile AppArmor\n\nAppArmor to moduł bezpieczeństwa jądra Linux ograniczający możliwości programów. W Kubernetes 1.30+ jest wspierany natywnie w securityContext.\n\n**Twoje zadanie:**\n\nUtwórz Pod o nazwie `apparmor-pod` używający obrazu `nginx:alpine`. Skonfiguruj `securityContext` na poziomie Poda, aby używał profilu AppArmor `RuntimeDefault`.\n\n```bash\n# Weryfikacja:\nkubectl get pod apparmor-pod -o yaml | grep appArmor\n```",
   "hints": [
     {
-      "title": "Set AppArmor Profile",
-      "body": "Add `appArmorProfile: { type: RuntimeDefault }` under `spec.securityContext`.",
+      "title": "Ustaw profil AppArmor",
+      "body": "Dodaj `appArmorProfile: { type: RuntimeDefault }` w sekcji `spec.securityContext`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: apparmor-pod\nspec:\n  securityContext:\n    appArmorProfile:\n      type: RuntimeDefault\n  containers:\n  - name: app\n    image: nginx:alpine\nEOF"
     }
   ],
@@ -17,7 +17,7 @@
   "validation": {
     "commands": [
       {
-        "description": "appArmorProfile type is RuntimeDefault",
+        "description": "Typ appArmorProfile to RuntimeDefault",
         "command": "kubectl get pod apparmor-pod -o jsonpath='{.spec.securityContext.appArmorProfile.type}'",
         "expected_output": "RuntimeDefault",
         "match": "exact"

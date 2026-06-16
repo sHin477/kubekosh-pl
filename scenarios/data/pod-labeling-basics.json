@@ -1,15 +1,15 @@
 {
   "id": "pod-labeling-basics",
-  "title": "Labelling Resources",
+  "title": "Etykietowanie zasobów",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "task",
   "weight": 3,
-  "description": "## Labelling Resources\n\nLabels are key-value pairs attached to objects, used to organize and select subsets of objects. A pod named `app-worker` is currently running, but it's missing a required label.\n\n**Your task:**\n\nAdd the label `tier=frontend` to the existing pod `app-worker`.\n\n```bash\n# Verify labels\nkubectl get pod app-worker --show-labels\n```",
+  "description": "## Etykietowanie zasobów\n\nEtykiety to pary klucz-wartość dołączane do obiektów, używane do organizowania i wybierania podzbiorów obiektów. Pod o nazwie `app-worker` działa, ale brakuje mu wymaganej etykiety.\n\n**Twoje zadanie:**\n\nDodaj etykietę `tier=frontend` do istniejącego poda `app-worker`.\n\n```bash\n# Weryfikacja etykiet\nkubectl get pod app-worker --show-labels\n```",
   "hints": [
     {
-      "title": "Use kubectl label",
-      "body": "You can label resources imperatively without editing the YAML.",
+      "title": "Użyj kubectl label",
+      "body": "Możesz etykietować zasoby imperatywnie bez edycji YAML.",
       "command": "kubectl label pod app-worker tier=frontend"
     }
   ],
@@ -21,7 +21,7 @@
   "validation": {
     "commands": [
       {
-        "description": "Pod has label tier=frontend",
+        "description": "Pod ma etykietę tier=frontend",
         "command": "kubectl get pod app-worker -o jsonpath='{.metadata.labels.tier}'",
         "expected_output": "frontend",
         "match": "exact"

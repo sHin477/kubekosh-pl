@@ -1,58 +1,58 @@
 {
   "id": "deploy-nginx",
-  "title": "Deploy and Expose Nginx",
+  "title": "Wdrożenie i ekspozycja Nginx",
   "category": "Workloads",
   "difficulty": "Easy",
   "type": "task",
   "weight": 5,
-  "description": "## Deploy and Expose an Nginx Application\n\nThe platform team needs a simple web server running in the cluster.\n\n**Your tasks:**\n1. Create a **Deployment** named `webserver` in the `default` namespace\n2. Use the image `nginx:1.25`\n3. Set replica count to **2**\n4. Expose it via a **ClusterIP Service** named `webserver-svc` on port **80**\n\n> 💡 Tip: You can use `kubectl create` for both resources imperatively, or write YAML manifests.",
+  "description": "## Wdrożenie i ekspozycja aplikacji Nginx\n\nZespół platformy potrzebuje prostego serwera WWW działającego w klastrze.\n\n**Twoje zadania:**\n1. Utwórz **Deployment** o nazwie `webserver` w przestrzeni nazw `default`\n2. Użyj obrazu `nginx:1.25`\n3. Ustaw liczbę replik na **2**\n4. Wyeksponuj go przez **Service ClusterIP** o nazwie `webserver-svc` na porcie **80**\n\n> 💡 Wskazówka: Możesz użyć `kubectl create` dla obu zasobów imperatywnie lub napisać manifesty YAML.",
   "hints": [
     {
-      "title": "Create the Deployment",
-      "body": "Use `kubectl create deployment` with the `--image` and `--replicas` flags.",
+      "title": "Utwórz Deployment",
+      "body": "Użyj `kubectl create deployment` z flagami `--image` i `--replicas`.",
       "command": "kubectl create deployment webserver --image=nginx:1.25 --replicas=2"
     },
     {
-      "title": "Expose the Deployment",
-      "body": "Use `kubectl expose` to create a ClusterIP service targeting port 80.",
+      "title": "Eksponuj Deployment",
+      "body": "Użyj `kubectl expose`, aby utworzyć serwis ClusterIP kierujący na port 80.",
       "command": "kubectl expose deployment webserver --name=webserver-svc --port=80 --target-port=80"
     },
     {
-      "title": "Verify",
-      "body": "Check that both resources are up and the service endpoints are populated.",
+      "title": "Weryfikacja",
+      "body": "Sprawdź, czy oba zasoby działają i czy endpointy serwisu są wypełnione.",
       "command": "kubectl get deployment webserver && kubectl get svc webserver-svc && kubectl get endpoints webserver-svc"
     }
   ],
   "setup_commands": [],
   "validation": {
-    "description": "Checks that the deployment exists with 2 replicas, uses the correct image, and the service exists targeting port 80.",
+    "description": "Sprawdza, czy Deployment istnieje z 2 replikami, używa właściwego obrazu i czy Service istnieje na porcie 80.",
     "commands": [
       {
-        "description": "Deployment 'webserver' exists",
+        "description": "Deployment 'webserver' istnieje",
         "command": "kubectl get deployment webserver -o jsonpath='{.metadata.name}'",
         "expected_output": "webserver",
         "match": "exact"
       },
       {
-        "description": "Deployment has 2 ready replicas",
+        "description": "Deployment ma 2 gotowe repliki",
         "command": "kubectl get deployment webserver -o jsonpath='{.status.readyReplicas}'",
         "expected_output": "2",
         "match": "exact"
       },
       {
-        "description": "Deployment uses nginx:1.25 image",
+        "description": "Deployment używa obrazu nginx:1.25",
         "command": "kubectl get deployment webserver -o jsonpath='{.spec.template.spec.containers[0].image}'",
         "expected_output": "nginx:1.25",
         "match": "exact"
       },
       {
-        "description": "Service 'webserver-svc' exists",
+        "description": "Service 'webserver-svc' istnieje",
         "command": "kubectl get svc webserver-svc -o jsonpath='{.metadata.name}'",
         "expected_output": "webserver-svc",
         "match": "exact"
       },
       {
-        "description": "Service exposes port 80",
+        "description": "Service eksponuje port 80",
         "command": "kubectl get svc webserver-svc -o jsonpath='{.spec.ports[0].port}'",
         "expected_output": "80",
         "match": "exact"

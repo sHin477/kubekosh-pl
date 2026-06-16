@@ -1,20 +1,20 @@
 {
   "id": "rolling-update-task",
-  "title": "Perform a Rolling Update",
+  "title": "Wykonywanie Rolling Update",
   "category": "Workloads",
   "difficulty": "Easy",
   "type": "task",
   "weight": 5,
-  "description": "## Perform a Rolling Update\n\nA Deployment named `app-v1` is running `nginx:1.24`. Your team needs to upgrade it to `nginx:1.25`.\n\n**Your task:**\n\nUpdate the image of the `app-v1` deployment to `nginx:1.25` using a rolling update strategy. Ensure all replicas are running the new image.\n\n```bash\n# Hint: kubectl set image can update an image in-place\nkubectl set image deployment/<name> <container>=<image>\n```",
+  "description": "## Wykonywanie Rolling Update\n\nDeployment o nazwie `app-v1` używa obrazu `nginx:1.24`. Zespół musi zaktualizować go do `nginx:1.25`.\n\n**Twoje zadanie:**\n\nZaktualizuj obraz Deployment `app-v1` do `nginx:1.25` za pomocą strategii rolling update. Upewnij się, że wszystkie repliki działają na nowym obrazie.\n\n```bash\n# Wskazówka: kubectl set image umożliwia aktualizację obrazu w miejscu\nkubectl set image deployment/<name> <container>=<image>\n```",
   "hints": [
     {
-      "title": "Set a new image on a Deployment",
-      "body": "Use `kubectl set image deployment/<name> <container-name>=<new-image>` to trigger a rolling update.",
+      "title": "Ustaw nowy obraz dla Deployment",
+      "body": "Użyj `kubectl set image deployment/<name> <container-name>=<new-image>`, aby uruchomić rolling update.",
       "command": "kubectl set image deployment/app-v1 nginx=nginx:1.25"
     },
     {
-      "title": "Check rollout progress",
-      "body": "Monitor the rollout with `kubectl rollout status`. Once complete, all pods will run the new image.",
+      "title": "Sprawdź postęp wdrożenia",
+      "body": "Monitoruj rollout za pomocą `kubectl rollout status`. Po zakończeniu wszystkie pody będą używać nowego obrazu.",
       "command": "kubectl get deployment app-v1 -o jsonpath='{.spec.template.spec.containers[0].image}'"
     }
   ],
@@ -29,13 +29,13 @@
   "validation": {
     "commands": [
       {
-        "description": "Deployment 'app-v1' image is nginx:1.25",
+        "description": "Obraz Deployment 'app-v1' to nginx:1.25",
         "command": "kubectl get deployment app-v1 -o jsonpath='{.spec.template.spec.containers[0].image}'",
         "expected_output": "nginx:1.25",
         "match": "exact"
       },
       {
-        "description": "Deployment has 2 ready replicas",
+        "description": "Deployment ma 2 gotowe repliki",
         "command": "kubectl get deployment app-v1 -o jsonpath='{.status.readyReplicas}' 2>/dev/null | grep -v '^$' || echo 0",
         "expected_output": "2",
         "match": "exact"

@@ -1,35 +1,35 @@
 {
   "id": "labels-selectors-mcq",
-  "title": "Labels and Selectors",
+  "title": "Etykiety i selektory",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 3,
-  "description": "## Labels and Selectors\n\nYou run the following command:\n\n```bash\nkubectl get pods -l env=prod,tier=frontend\n```\n\nWhat does this command return?",
+  "description": "## Etykiety i selektory\n\nUruchamiasz następującą komendę:\n\n```bash\nkubectl get pods -l env=prod,tier=frontend\n```\n\nCo ta komenda zwraca?",
   "options": [
     {
       "id": "a",
-      "text": "Pods that have BOTH `env=prod` AND `tier=frontend` labels"
+      "text": "Pody mające ZARÓWNO etykietę `env=prod` JAK I `tier=frontend`"
     },
     {
       "id": "b",
-      "text": "Pods that have either `env=prod` OR `tier=frontend` labels"
+      "text": "Pody mające etykietę `env=prod` LUB `tier=frontend`"
     },
     {
       "id": "c",
-      "text": "Pods that do NOT have `env=prod` or `tier=frontend` labels"
+      "text": "Pody NIEmające etykiet `env=prod` ani `tier=frontend`"
     },
     {
       "id": "d",
-      "text": "All pods, sorted by the `env` and `tier` label values"
+      "text": "Wszystkie pody, posortowane według wartości etykiet `env` i `tier`"
     }
   ],
   "correct_option": "a",
-  "explanation": "When you specify multiple label selector expressions separated by commas, Kubernetes applies a logical **AND** — all conditions must be true. Only pods that have both `env=prod` **and** `tier=frontend` are returned. Use `-l 'env in (prod,staging)'` for OR-style matching.",
+  "explanation": "Gdy podajesz wiele wyrażeń selektora etykiet oddzielonych przecinkami, Kubernetes stosuje logiczne **AND** — wszystkie warunki muszą być prawdziwe. Zwracane są tylko pody mające zarówno `env=prod` **jak i** `tier=frontend`. Użyj `-l 'env in (prod,staging)'` do dopasowania w stylu OR.",
   "hints": [
     {
-      "title": "How comma-separated selectors work",
-      "body": "The `-l` flag accepts a comma-separated list of `key=value` expressions. Multiple expressions are ANDed together — all must match for a pod to be included in the result.",
+      "title": "Jak działają selektory oddzielone przecinkami",
+      "body": "Flaga `-l` akceptuje oddzieloną przecinkami listę wyrażeń `key=value`. Wiele wyrażeń jest łączonych operatorem AND — wszystkie muszą pasować, aby pod znalazł się w wyniku.",
       "command": "kubectl get pods -l env=prod,tier=frontend"
     }
   ],

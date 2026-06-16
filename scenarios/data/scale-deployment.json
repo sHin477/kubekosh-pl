@@ -1,20 +1,20 @@
 {
   "id": "scale-deployment",
-  "title": "Scaling a Deployment",
+  "title": "Skalowanie Deployment",
   "category": "Workloads",
   "difficulty": "Easy",
   "type": "task",
   "weight": 4,
-  "description": "## Scaling a Deployment\n\nA deployment named `webapp` is currently running with **1 replica**. Traffic has increased and you need to scale it up.\n\n**Your task:**\n\nScale the `webapp` deployment to **4 replicas** and verify all pods become Ready.\n\n```bash\n# You can use the imperative command\nkubectl scale deployment webapp --replicas=4\n# Or edit the manifest\nkubectl edit deployment webapp\n```",
+  "description": "## Skalowanie Deployment\n\nDeployment o nazwie `webapp` aktualnie działa z **1 repliką**. Ruch wzrósł i musisz go skalować.\n\n**Twoje zadanie:**\n\nZeskaluj Deployment `webapp` do **4 replik** i sprawdź, czy wszystkie pody staną się Ready.\n\n```bash\n# Możesz użyć komendy imperatywnej\nkubectl scale deployment webapp --replicas=4\n# Lub edytować manifest\nkubectl edit deployment webapp\n```",
   "hints": [
     {
-      "title": "Scale imperatively",
-      "body": "`kubectl scale` is the quickest way to change replica count without editing a YAML file.",
+      "title": "Skalowanie imperatywne",
+      "body": "`kubectl scale` to najszybszy sposób na zmianę liczby replik bez edycji pliku YAML.",
       "command": "kubectl scale deployment webapp --replicas=4"
     },
     {
-      "title": "Verify the scale",
-      "body": "Check READY column in `kubectl get deployment webapp` — it should show 4/4.",
+      "title": "Weryfikacja skalowania",
+      "body": "Sprawdź kolumnę READY w `kubectl get deployment webapp` — powinna pokazywać 4/4.",
       "command": "kubectl get deployment webapp"
     }
   ],
@@ -29,13 +29,13 @@
   "validation": {
     "commands": [
       {
-        "description": "Deployment 'webapp' has 4 replicas specified",
+        "description": "Deployment 'webapp' ma 4 repliki w specyfikacji",
         "command": "kubectl get deployment webapp -o jsonpath='{.spec.replicas}'",
         "expected_output": "4",
         "match": "exact"
       },
       {
-        "description": "Deployment 'webapp' has 4 ready replicas",
+        "description": "Deployment 'webapp' ma 4 gotowe repliki",
         "command": "kubectl get deployment webapp -o jsonpath='{.status.readyReplicas}' 2>/dev/null | grep -v '^$' || echo 0",
         "expected_output": "4",
         "match": "exact"

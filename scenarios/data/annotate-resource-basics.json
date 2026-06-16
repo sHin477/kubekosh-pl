@@ -1,20 +1,20 @@
 {
   "id": "annotate-resource-basics",
-  "title": "Annotating Kubernetes Resources",
+  "title": "Adnotowanie zasobów Kubernetes",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "task",
   "weight": 3,
-  "description": "## Annotating Kubernetes Resources\n\nAnnotations attach arbitrary non-identifying metadata to Kubernetes objects — such as contact info, tool versions, or documentation URLs. Unlike labels, annotations **cannot** be used as selectors.\n\n**Your task:**\n\nA Deployment named `myapp` is running in the `default` namespace. Add the following annotations to it:\n- `contact=ops@company.com`\n- `reviewed=true`\n\n```bash\n# Verify:\nkubectl get deployment myapp -o jsonpath='{.metadata.annotations}'\n```",
+  "description": "## Adnotowanie zasobów Kubernetes\n\nAdnotacje pozwalają dołączać dowolne metadane do obiektów Kubernetes — np. dane kontaktowe, wersje narzędzi czy adresy URL dokumentacji. W odróżnieniu od etykiet, adnotacji **nie można** używać jako selektorów.\n\n**Twoje zadanie:**\n\nDeployment o nazwie `myapp` działa w przestrzeni nazw `default`. Dodaj do niego następujące adnotacje:\n- `contact=ops@company.com`\n- `reviewed=true`\n\n```bash\n# Weryfikacja:\nkubectl get deployment myapp -o jsonpath='{.metadata.annotations}'\n```",
   "hints": [
     {
       "title": "kubectl annotate",
-      "body": "Use `kubectl annotate` to imperatively add or overwrite annotations on any resource.",
+      "body": "Użyj `kubectl annotate`, aby imperatywnie dodać lub nadpisać adnotacje na dowolnym zasobie.",
       "command": "kubectl annotate deployment myapp contact=ops@company.com reviewed=true"
     },
     {
-      "title": "Overwrite an existing annotation",
-      "body": "If the annotation key already exists, pass `--overwrite` to update it.",
+      "title": "Nadpisanie istniejącej adnotacji",
+      "body": "Jeśli klucz adnotacji już istnieje, przekaż flagę `--overwrite`, aby go zaktualizować.",
       "command": "kubectl annotate deployment myapp contact=ops@company.com reviewed=true --overwrite"
     }
   ],
@@ -29,24 +29,25 @@
   "validation": {
     "commands": [
       {
-        "description": "Deployment 'myapp' exists",
+        "description": "Deployment 'myapp' istnieje",
         "command": "kubectl get deployment myapp -o jsonpath='{.metadata.name}'",
         "expected_output": "myapp",
         "match": "exact"
       },
       {
-        "description": "Annotation 'contact' is ops@company.com",
+        "description": "Adnotacja 'contact' ma wartość ops@company.com",
         "command": "kubectl get deployment myapp -o jsonpath='{.metadata.annotations.contact}'",
         "expected_output": "ops@company.com",
         "match": "exact"
       },
       {
-        "description": "Annotation 'reviewed' is true",
+        "description": "Adnotacja 'reviewed' ma wartość true",
         "command": "kubectl get deployment myapp -o jsonpath='{.metadata.annotations.reviewed}'",
         "expected_output": "true",
         "match": "exact"
       }
-    ]
+    ],
+    "description": "Sprawdza, czy Deployment 'myapp' istnieje i ma wymagane adnotacje."
   },
   "default_namespace": "default",
   "teardown_commands": [

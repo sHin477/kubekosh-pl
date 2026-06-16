@@ -1,35 +1,35 @@
 {
   "id": "cluster-upgrade-mcq",
-  "title": "Cluster Upgrade Order",
+  "title": "Kolejność aktualizacji klastra",
   "category": "Cluster Administration",
   "difficulty": "Hard",
   "type": "mcq",
   "weight": 5,
-  "description": "## Cluster Upgrade Order\n\nYou need to upgrade a kubeadm-managed cluster from v1.28 to v1.29. What is the **correct order** of operations?",
+  "description": "## Kolejność aktualizacji klastra\n\nMusisz zaktualizować klaster zarządzany przez kubeadm z v1.28 do v1.29. Jaka jest **prawidłowa kolejność** operacji?",
   "options": [
     {
       "id": "a",
-      "text": "1. Upgrade worker nodes → 2. Upgrade control plane → 3. Upgrade kubeadm → 4. Update kubelet/kubectl"
+      "text": "1. Zaktualizuj węzły robocze → 2. Zaktualizuj płaszczyznę sterowania → 3. Zaktualizuj kubeadm → 4. Zaktualizuj kubelet/kubectl"
     },
     {
       "id": "b",
-      "text": "1. Upgrade kubeadm on control plane → 2. Run `kubeadm upgrade apply` → 3. Upgrade kubelet/kubectl on control plane → 4. Drain and upgrade worker nodes one by one"
+      "text": "1. Zaktualizuj kubeadm na płaszczyźnie sterowania → 2. Uruchom `kubeadm upgrade apply` → 3. Zaktualizuj kubelet/kubectl na płaszczyźnie sterowania → 4. Odsuń i zaktualizuj węzły robocze jeden po drugim"
     },
     {
       "id": "c",
-      "text": "1. `kubectl drain` all nodes → 2. Upgrade all nodes simultaneously → 3. `kubectl uncordon` all nodes"
+      "text": "1. `kubectl drain` wszystkich węzłów → 2. Zaktualizuj wszystkie węzły jednocześnie → 3. `kubectl uncordon` wszystkich węzłów"
     },
     {
       "id": "d",
-      "text": "1. Upgrade etcd first → 2. Upgrade API server → 3. Upgrade scheduler and controller-manager → 4. Upgrade kubelet"
+      "text": "1. Najpierw zaktualizuj etcd → 2. Zaktualizuj API server → 3. Zaktualizuj scheduler i controller-manager → 4. Zaktualizuj kubelet"
     }
   ],
   "correct_option": "b",
-  "explanation": "The correct kubeadm upgrade order is: **1)** Upgrade `kubeadm` on the control plane node → **2)** Run `kubeadm upgrade apply v1.29.x` (upgrades control-plane components) → **3)** Upgrade `kubelet` and `kubectl` on the control plane, then `systemctl daemon-reload && systemctl restart kubelet` → **4)** For each worker: `kubectl drain`, upgrade `kubeadm`/`kubelet`/`kubectl`, run `kubeadm upgrade node`, restart kubelet, `kubectl uncordon`. Never upgrade workers before the control plane.",
+  "explanation": "Prawidłowa kolejność aktualizacji kubeadm: **1)** Zaktualizuj `kubeadm` na węźle płaszczyzny sterowania → **2)** Uruchom `kubeadm upgrade apply v1.29.x` (aktualizuje komponenty płaszczyzny sterowania) → **3)** Zaktualizuj `kubelet` i `kubectl` na płaszczyźnie sterowania, następnie `systemctl daemon-reload && systemctl restart kubelet` → **4)** Dla każdego workera: `kubectl drain`, zaktualizuj `kubeadm`/`kubelet`/`kubectl`, uruchom `kubeadm upgrade node`, zrestartuj kubelet, `kubectl uncordon`. Nigdy nie aktualizuj workerów przed płaszczyzną sterowania.",
   "hints": [
     {
-      "title": "kubeadm upgrade steps",
-      "body": "Key commands: `kubeadm upgrade plan` (preview), `kubeadm upgrade apply v1.29.x` (apply), `kubectl drain <node>` (before worker upgrade), `kubectl uncordon <node>` (after).",
+      "title": "Kroki aktualizacji kubeadm",
+      "body": "Kluczowe komendy: `kubeadm upgrade plan` (podgląd), `kubeadm upgrade apply v1.29.x` (zastosuj), `kubectl drain <node>` (przed aktualizacją workera), `kubectl uncordon <node>` (po).",
       "command": "kubeadm upgrade plan"
     }
   ],

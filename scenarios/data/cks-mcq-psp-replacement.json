@@ -1,11 +1,11 @@
 {
   "id": "cks-mcq-psp-replacement",
-  "title": "Pod Security Evolution",
+  "title": "Ewolucja zabezpieczeń Podów",
   "category": "Cluster Security",
   "difficulty": "Easy",
   "type": "mcq",
   "weight": 2,
-  "description": "PodSecurityPolicies (PSP) were completely removed from Kubernetes in version 1.25. What is the built-in native replacement that enforces Pod Security Standards at the namespace level?",
+  "description": "PodSecurityPolicies (PSP) zostały całkowicie usunięte z Kubernetes w wersji 1.25. Jakie jest wbudowane natywne zastępstwo, które egzekwuje standardy bezpieczeństwa Podów na poziomie przestrzeni nazw?",
   "options": [
     {
       "id": "a",
@@ -21,11 +21,11 @@
     },
     {
       "id": "d",
-      "text": "AppArmor Profiles"
+      "text": "Profile AppArmor"
     }
   ],
   "correct_option": "c",
-  "explanation": "Pod Security Admission (PSA) is the built-in admission controller that evaluates Pods against the predefined Pod Security Standards (Privileged, Baseline, and Restricted) based on namespace labels.",
+  "explanation": "Pod Security Admission (PSA) to wbudowany kontroler admission, który ocenia Pody względem predefiniowanych standardów bezpieczeństwa (Privileged, Baseline i Restricted) na podstawie etykiet przestrzeni nazw.",
   "hints": [],
   "setup_commands": [],
   "default_namespace": "default",

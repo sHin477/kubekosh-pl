@@ -1,15 +1,15 @@
 {
   "id": "kubectl-cp-basics",
-  "title": "Copy Files to Containers",
+  "title": "Kopiowanie plików do kontenerów",
   "category": "Troubleshooting",
   "difficulty": "Medium",
   "type": "task",
   "weight": 4,
-  "description": "## Copy Files Between Containers and the Cluster\n\nThe `kubectl cp` command allows you to copy files and directories to and from running containers.\n\n**Your task:**\n\nA pod named `config-pod` is running with a file at `/src/config.json`. Copy it **into** the same pod at `/app/config.json` using `kubectl cp`.\n\n> Tip: `kubectl cp` syntax is `kubectl cp <source> <pod>:<dest>`",
+  "description": "## Kopiowanie plików między kontenerami a klastrem\n\nKomenda `kubectl cp` pozwala kopiować pliki i katalogi do i z działających kontenerów.\n\n**Twoje zadanie:**\n\nPod o nazwie `config-pod` działa z plikiem pod `/src/config.json`. Skopiuj go **do** tego samego poda pod ścieżkę `/app/config.json` używając `kubectl cp`.\n\n> Wskazówka: Składnia `kubectl cp` to `kubectl cp <source> <pod>:<dest>`",
   "hints": [
     {
-      "title": "Use kubectl cp",
-      "body": "First copy the file out from /src, then copy it back to /app, or use kubectl exec to verify.",
+      "title": "Użyj kubectl cp",
+      "body": "Najpierw skopiuj plik z /src, a następnie skopiuj go z powrotem do /app, lub użyj kubectl exec do weryfikacji.",
       "command": "kubectl cp config-pod:/src/config.json /tmp/config.json && kubectl cp /tmp/config.json config-pod:/app/config.json"
     }
   ],
@@ -30,7 +30,7 @@
   "validation": {
     "commands": [
       {
-        "description": "File /app/config.json exists inside pod",
+        "description": "Plik /app/config.json istnieje wewnątrz poda",
         "command": "kubectl exec config-pod -- cat /app/config.json 2>/dev/null",
         "expected_output": "{\"status\": \"ok\"}",
         "match": "contains"

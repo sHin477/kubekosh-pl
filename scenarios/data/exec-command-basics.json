@@ -1,15 +1,15 @@
 {
   "id": "exec-command-basics",
-  "title": "Execute Commands in Pods",
+  "title": "Wykonywanie komend wewnątrz Poda",
   "category": "Troubleshooting",
   "difficulty": "Easy",
   "type": "task",
   "weight": 3,
-  "description": "## Execute Commands in Pods\n\nSometimes you need to run arbitrary commands inside a running container to debug or change state.\n\n**Your task:**\n\nA pod named `worker-pod` is running. Use `kubectl exec` to create an empty file at `/tmp/ready` inside the container.\n\n```bash\n# Verify the file was created:\nkubectl exec worker-pod -- ls /tmp/ready\n```",
+  "description": "## Wykonywanie komend wewnątrz Poda\n\nCzasami trzeba uruchomić dowolne komendy wewnątrz działającego kontenera w celach diagnostycznych lub zmiany stanu.\n\n**Twoje zadanie:**\n\nPod o nazwie `worker-pod` działa. Użyj `kubectl exec`, aby utworzyć pusty plik `/tmp/ready` wewnątrz kontenera.\n\n```bash\n# Zweryfikuj, czy plik został utworzony:\nkubectl exec worker-pod -- ls /tmp/ready\n```",
   "hints": [
     {
-      "title": "Use kubectl exec",
-      "body": "You can pass commands to the container by adding `--` after the pod name.",
+      "title": "Użyj kubectl exec",
+      "body": "Możesz przekazywać komendy do kontenera dodając `--` po nazwie poda.",
       "command": "kubectl exec worker-pod -- touch /tmp/ready"
     }
   ],
@@ -24,7 +24,7 @@
   "validation": {
     "commands": [
       {
-        "description": "File /tmp/ready exists inside worker-pod",
+        "description": "Plik /tmp/ready istnieje wewnątrz worker-pod",
         "command": "kubectl exec worker-pod -- ls /tmp/ready 2>/dev/null",
         "expected_output": "/tmp/ready",
         "match": "contains"

@@ -1,11 +1,11 @@
 {
   "id": "cks-mcq-kubelet-auth",
-  "title": "Securing the Kubelet",
+  "title": "Zabezpieczanie Kubeleta",
   "category": "Cluster Setup",
   "difficulty": "Medium",
   "type": "mcq",
   "weight": 2,
-  "description": "The kubelet exposes its own API on port 10250, which can allow an attacker to run `exec` commands on pods if left unsecured. Which configuration setting in the kubelet config file ensures unauthenticated requests are rejected?",
+  "description": "Kubelet udostępnia własne API na porcie 10250, które może pozwolić atakującemu na uruchamianie komend `exec` na podach jeśli nie jest zabezpieczone. Które ustawienie w pliku konfiguracyjnym kubeleta zapewnia odrzucanie nieuwierzytelnionych żądań?",
   "options": [
     {
       "id": "a",
@@ -25,7 +25,7 @@
     }
   ],
   "correct_option": "c",
-  "explanation": "Setting `authentication.anonymous.enabled: false` ensures that the kubelet will reject any API requests that do not present a valid client certificate or bearer token.",
+  "explanation": "Ustawienie `authentication.anonymous.enabled: false` zapewnia, że kubelet odrzuci wszelkie żądania API, które nie przedstawiają ważnego certyfikatu klienta lub tokenu bearer.",
   "hints": [],
   "setup_commands": [],
   "default_namespace": "default",

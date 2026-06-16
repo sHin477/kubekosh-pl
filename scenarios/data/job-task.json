@@ -1,15 +1,15 @@
 {
   "id": "job-task",
-  "title": "Create a One-Shot Job",
+  "title": "Tworzenie jednorazowego Job",
   "category": "Workloads & Scheduling",
   "difficulty": "Easy",
   "type": "task",
   "weight": 4,
-  "description": "## Create a One-Shot Job\n\nA **Job** creates one or more pods and ensures a specified number of them successfully terminate. Unlike Deployments, Jobs are meant for finite tasks that run to completion.\n\n**Your task:**\n\nCreate a Job named `pi-job` that:\n- Uses `perl:5.34` image\n- Runs: `perl -Mbignum=bpi -wle 'print bpi(100)'` (computes π to 100 digits)\n- `completions: 1`\n- `restartPolicy: Never`",
+  "description": "## Tworzenie jednorazowego Job\n\n**Job** tworzy jeden lub więcej podów i zapewnia, że określona liczba z nich zakończy się pomyślnie. W przeciwieństwie do Deploymentów, Joby są przeznaczone do skończonych zadań uruchamianych do zakończenia.\n\n**Twoje zadanie:**\n\nUtwórz Job o nazwie `pi-job`, który:\n- Używa obrazu `perl:5.34`\n- Uruchamia: `perl -Mbignum=bpi -wle 'print bpi(100)'` (oblicza π do 100 cyfr)\n- `completions: 1`\n- `restartPolicy: Never`",
   "hints": [
     {
-      "title": "Job manifest",
-      "body": "Set `restartPolicy: Never` or `OnFailure` in the pod template spec (not at pod spec level).",
+      "title": "Manifest Job",
+      "body": "Ustaw `restartPolicy: Never` lub `OnFailure` w spec szablonu poda (nie na poziomie spec poda).",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: batch/v1\nkind: Job\nmetadata:\n  name: pi-job\nspec:\n  completions: 1\n  template:\n    spec:\n      restartPolicy: Never\n      containers:\n      - name: pi\n        image: perl:5.34\n        command: [\"perl\",\"-Mbignum=bpi\",\"-wle\",\"print bpi(100)\"]\nEOF"
     }
   ],
@@ -17,19 +17,19 @@
   "validation": {
     "commands": [
       {
-        "description": "Job 'pi-job' exists",
+        "description": "Job 'pi-job' istnieje",
         "command": "kubectl get job pi-job -o jsonpath='{.metadata.name}'",
         "expected_output": "pi-job",
         "match": "exact"
       },
       {
-        "description": "Job completions is 1",
+        "description": "Job ma completions: 1",
         "command": "kubectl get job pi-job -o jsonpath='{.spec.completions}'",
         "expected_output": "1",
         "match": "exact"
       },
       {
-        "description": "Job restartPolicy is Never",
+        "description": "Job ma restartPolicy: Never",
         "command": "kubectl get job pi-job -o jsonpath='{.spec.template.spec.restartPolicy}'",
         "expected_output": "Never",
         "match": "exact"

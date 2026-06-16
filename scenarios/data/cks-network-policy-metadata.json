@@ -1,15 +1,15 @@
 {
   "id": "cks-network-policy-metadata",
-  "title": "Block Cloud Metadata",
+  "title": "Blokowanie dostępu do metadanych chmury",
   "category": "Network Security",
   "difficulty": "Hard",
   "type": "task",
   "weight": 6,
-  "description": "## Restricting Cloud Metadata Access\n\nCloud providers expose sensitive instance metadata at `169.254.169.254`. An attacker exploiting an SSRF vulnerability can use this to steal cloud credentials.\n\n**Your task:**\n\nCreate a NetworkPolicy named `deny-metadata` in the `default` namespace that applies to all pods. It should explicitly **deny** all Egress traffic to the IP block `169.254.169.254/32`, while **allowing** all other Egress traffic.\n\n```bash\n# Tip: Use an ipBlock exception (except).\n```",
+  "description": "## Blokowanie dostępu do metadanych chmury\n\nDostawcy chmury udostępniają wrażliwe metadane instancji pod adresem `169.254.169.254`. Atakujący wykorzystujący podatność SSRF może użyć tego do kradzieży danych uwierzytelnienia chmury.\n\n**Twoje zadanie:**\n\nUtwórz NetworkPolicy o nazwie `deny-metadata` w przestrzeni nazw `default` stosującą się do wszystkich podów. Powinna jawnie **blokować** cały ruch Egress do bloku IP `169.254.169.254/32`, jednocześnie **zezwalając** na cały inny ruch Egress.\n\n```bash\n# Wskazówka: użyj wyjątku ipBlock (except).\n```",
   "hints": [
     {
-      "title": "Except IPBlock",
-      "body": "Create an Egress rule that allows all traffic (`0.0.0.0/0`) EXCEPT `169.254.169.254/32`.",
+      "title": "Wyjątek IPBlock",
+      "body": "Utwórz regułę Egress zezwalającą na cały ruch (`0.0.0.0/0`) OPRÓCZ `169.254.169.254/32`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: deny-metadata\n  namespace: default\nspec:\n  podSelector: {}\n  policyTypes:\n  - Egress\n  egress:\n  - to:\n    - ipBlock:\n        cidr: 0.0.0.0/0\n        except:\n        - 169.254.169.254/32\nEOF"
     }
   ],
@@ -17,19 +17,19 @@
   "validation": {
     "commands": [
       {
-        "description": "NetworkPolicy deny-metadata exists",
+        "description": "NetworkPolicy deny-metadata istnieje",
         "command": "kubectl get networkpolicy deny-metadata -o jsonpath='{.metadata.name}'",
         "expected_output": "deny-metadata",
         "match": "exact"
       },
       {
-        "description": "Policy applies to all pods",
+        "description": "Polityka stosuje się do wszystkich podów",
         "command": "kubectl get networkpolicy deny-metadata -o jsonpath='{.spec.podSelector.matchLabels}'",
         "expected_output": "",
         "match": "exact"
       },
       {
-        "description": "Policy blocks metadata server",
+        "description": "Polityka blokuje serwer metadanych",
         "command": "kubectl get networkpolicy deny-metadata -o jsonpath='{.spec.egress[0].to[0].ipBlock.except[0]}' 2>/dev/null",
         "expected_output": "169.254.169.254/32",
         "match": "exact"

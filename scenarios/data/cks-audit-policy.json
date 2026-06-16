@@ -1,15 +1,15 @@
 {
   "id": "cks-audit-policy",
-  "title": "Write a Kubernetes Audit Policy",
+  "title": "Polityka audytu Kubernetes",
   "category": "Cluster Setup",
   "difficulty": "Hard",
   "type": "task",
   "weight": 7,
-  "description": "## Kubernetes Audit Policy\n\nAudit logging lets you track who did what on the cluster. The kube-apiserver reads an **audit policy file** to decide which events to log and at which verbosity level.\n\n**Your task:**\n\nWrite an audit policy file at `/etc/kubernetes/audit-policy.yaml` with the following rules (in order):\n\n1. Log all operations on `secrets` in any namespace at level **`RequestResponse`**.\n2. Log read operations (`get`, `list`, `watch`) on `pods` at level **`Metadata`**.\n3. **Drop** (level `None`) all events for the `system:masters` group.\n4. Log everything else at level **`Metadata`** as a catch-all.\n\n```bash\n# Verify the policy file exists and contains the key fields:\ncat /etc/kubernetes/audit-policy.yaml\n```",
+  "description": "## Polityka audytu Kubernetes\n\nLogowanie audytu umożliwia śledzenie kto i co robił w klastrze. kube-apiserver odczytuje **plik polityki audytu**, aby zdecydować które zdarzenia logować i z jakim poziomem szczegółowości.\n\n**Twoje zadanie:**\n\nNapisz plik polityki audytu pod ścieżką `/etc/kubernetes/audit-policy.yaml` z następującymi regułami (w kolejności):\n\n1. Loguj wszystkie operacje na `secrets` w dowolnej przestrzeni nazw na poziomie **`RequestResponse`**.\n2. Loguj operacje odczytu (`get`, `list`, `watch`) na `pods` na poziomie **`Metadata`**.\n3. **Odrzuć** (poziom `None`) wszystkie zdarzenia dla grupy `system:masters`.\n4. Loguj wszystko inne na poziomie **`Metadata`** jako regułę domyślną.\n\n```bash\n# Weryfikacja:\ncat /etc/kubernetes/audit-policy.yaml\n```",
   "hints": [
     {
-      "title": "Audit policy structure",
-      "body": "An audit policy is a YAML file with `apiVersion: audit.k8s.io/v1`, `kind: Policy`, and a `rules:` list. Order matters — first matching rule wins.",
+      "title": "Struktura polityki audytu",
+      "body": "Polityka audytu to plik YAML z `apiVersion: audit.k8s.io/v1`, `kind: Policy` i listą `rules:`. Kolejność ma znaczenie — wygrywa pierwsza pasująca reguła.",
       "command": "cat <<EOF > /etc/kubernetes/audit-policy.yaml\napiVersion: audit.k8s.io/v1\nkind: Policy\nrules:\n- level: RequestResponse\n  resources:\n  - group: \"\"\n    resources: [\"secrets\"]\n- level: Metadata\n  verbs: [\"get\", \"list\", \"watch\"]\n  resources:\n  - group: \"\"\n    resources: [\"pods\"]\n- level: None\n  userGroups: [\"system:masters\"]\n- level: Metadata\nEOF"
     }
   ],
@@ -21,31 +21,31 @@
   "validation": {
     "commands": [
       {
-        "description": "Audit policy file is valid YAML with kind: Policy",
+        "description": "Plik polityki audytu jest poprawnym YAML z kind: Policy",
         "command": "python3 -c \"import yaml; p=yaml.safe_load(open('/etc/kubernetes/audit-policy.yaml')); print(p.get('kind',''))\"",
         "expected_output": "Policy",
         "match": "exact"
       },
       {
-        "description": "Rule 1: level is RequestResponse and targets secrets",
+        "description": "Reguła 1: poziom RequestResponse dla secrets",
         "command": "python3 -c \"import yaml; p=yaml.safe_load(open('/etc/kubernetes/audit-policy.yaml')); r=p['rules'][0]; print('ok' if r['level']=='RequestResponse' and any('secrets' in x.get('resources',[]) for x in r.get('resources',[])) else 'fail')\"",
         "expected_output": "ok",
         "match": "exact"
       },
       {
-        "description": "Rule 2: level is Metadata, targets pods, verbs include get/list/watch",
+        "description": "Reguła 2: poziom Metadata dla pods z get/list/watch",
         "command": "python3 -c \"import yaml; p=yaml.safe_load(open('/etc/kubernetes/audit-policy.yaml')); print('ok' if any(r.get('level')=='Metadata' and any('pods' in x.get('resources',[]) for x in r.get('resources',[])) and set(r.get('verbs',[])) >= {'get','list','watch'} for r in p['rules']) else 'fail')\"",
         "expected_output": "ok",
         "match": "exact"
       },
       {
-        "description": "Rule 3: level is None for system:masters group",
+        "description": "Reguła 3: poziom None dla grupy system:masters",
         "command": "python3 -c \"import yaml; p=yaml.safe_load(open('/etc/kubernetes/audit-policy.yaml')); print('ok' if any(r.get('level')=='None' and 'system:masters' in r.get('userGroups',[]) for r in p['rules']) else 'fail')\"",
         "expected_output": "ok",
         "match": "exact"
       },
       {
-        "description": "Rule 4: catch-all is level Metadata with no other selectors",
+        "description": "Reguła 4: domyślny poziom Metadata",
         "command": "python3 -c \"import yaml; p=yaml.safe_load(open('/etc/kubernetes/audit-policy.yaml')); last=p['rules'][-1]; print('ok' if set(last.keys())=={'level'} and last['level']=='Metadata' else 'fail')\"",
         "expected_output": "ok",
         "match": "exact"

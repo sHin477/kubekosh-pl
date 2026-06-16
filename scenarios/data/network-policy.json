@@ -1,25 +1,25 @@
 {
   "id": "network-policy",
-  "title": "Isolate Traffic with NetworkPolicy",
+  "title": "Izolacja ruchu za pomocą NetworkPolicy",
   "category": "Networking",
   "difficulty": "Hard",
   "type": "task",
   "weight": 9,
-  "description": "## Implement Network Isolation\n\nA pre-created `database` pod in the `netpol` namespace must only accept traffic from pods labeled `role=backend`.\n\n**Your tasks:**\n1. Create a **NetworkPolicy** named `db-isolate` in the `netpol` namespace that:\n   - Targets pods with label `app=database`\n   - Allows **ingress** only from pods with label `role=backend` in the **same namespace**\n   - Denies all other ingress traffic\n2. Verify the policy is applied correctly\n\n> The `database` and `backend` pods are pre-created for you.",
+  "description": "## Implementacja izolacji sieciowej\n\nWcześniej utworzony pod `database` w przestrzeni nazw `netpol` musi akceptować ruch tylko od podów z etykietą `role=backend`.\n\n**Twoje zadania:**\n1. Utwórz **NetworkPolicy** o nazwie `db-isolate` w przestrzeni nazw `netpol`, która:\n   - Wskazuje na pody z etykietą `app=database`\n   - Zezwala na **ruch przychodzący** tylko od podów z etykietą `role=backend` w **tej samej przestrzeni nazw**\n   - Blokuje cały inny ruch przychodzący\n2. Zweryfikuj, że polityka jest poprawnie zastosowana\n\n> Pody `database` i `backend` są dla ciebie wstępnie utworzone.",
   "hints": [
     {
-      "title": "Understand NetworkPolicy selectors",
-      "body": "A NetworkPolicy uses `podSelector` to pick which pods it applies to, and `ingress.from` to define allowed sources.",
+      "title": "Zrozum selektory NetworkPolicy",
+      "body": "NetworkPolicy używa `podSelector`, aby wybrać które pody obejmuje, i `ingress.from`, aby zdefiniować dozwolone źródła.",
       "command": "kubectl explain networkpolicy.spec.ingress.from"
     },
     {
-      "title": "Write the NetworkPolicy",
-      "body": "An empty ingress rule (no `from`) denies everything. Specifying a `from` allows only those sources.",
+      "title": "Napisz NetworkPolicy",
+      "body": "Pusta reguła ingress (bez `from`) blokuje wszystko. Podanie `from` zezwala tylko na te źródła.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: db-isolate\n  namespace: netpol\nspec:\n  podSelector:\n    matchLabels:\n      app: database\n  policyTypes:\n  - Ingress\n  ingress:\n  - from:\n    - podSelector:\n        matchLabels:\n          role: backend\nEOF"
     },
     {
-      "title": "Verify the policy",
-      "body": "List NetworkPolicies to confirm it was created.",
+      "title": "Zweryfikuj politykę",
+      "body": "Wylistuj NetworkPolicies, aby potwierdzić, że została utworzona.",
       "command": "kubectl get networkpolicy db-isolate -n netpol -o yaml"
     }
   ],
@@ -38,28 +38,28 @@
     }
   ],
   "validation": {
-    "description": "Verifies the NetworkPolicy exists and correctly targets the database pod.",
+    "description": "Weryfikuje, czy NetworkPolicy istnieje i poprawnie wskazuje na pod database.",
     "commands": [
       {
-        "description": "NetworkPolicy 'db-isolate' exists",
+        "description": "NetworkPolicy 'db-isolate' istnieje",
         "command": "kubectl get networkpolicy db-isolate -n netpol -o jsonpath='{.metadata.name}'",
         "expected_output": "db-isolate",
         "match": "exact"
       },
       {
-        "description": "Policy targets pods with label app=database",
+        "description": "Polityka wskazuje na pody z etykietą app=database",
         "command": "kubectl get networkpolicy db-isolate -n netpol -o jsonpath='{.spec.podSelector.matchLabels.app}'",
         "expected_output": "database",
         "match": "exact"
       },
       {
-        "description": "Policy has Ingress policyType",
+        "description": "Polityka ma typ Ingress",
         "command": "kubectl get networkpolicy db-isolate -n netpol -o jsonpath='{.spec.policyTypes[0]}'",
         "expected_output": "Ingress",
         "match": "exact"
       },
       {
-        "description": "Ingress allows from role=backend",
+        "description": "Ingress zezwala z role=backend",
         "command": "kubectl get networkpolicy db-isolate -n netpol -o jsonpath='{.spec.ingress[0].from[0].podSelector.matchLabels.role}'",
         "expected_output": "backend",
         "match": "exact"

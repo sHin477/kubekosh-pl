@@ -1,15 +1,15 @@
 {
   "id": "dry-run-manifest-basics",
-  "title": "Generating YAML Manifests",
+  "title": "Generowanie manifestów YAML",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "task",
   "weight": 4,
-  "description": "## Generating and Applying Manifests with Dry Run\n\nInstead of writing YAML from scratch, you can use `kubectl` to generate templates using `--dry-run=client -o yaml` and then apply them.\n\n**Your task:**\n\nUse `kubectl run` with `--dry-run=client -o yaml` to generate a Pod manifest for `web-pod` using image `httpd:alpine`, then pipe it directly to `kubectl apply -f -` to create the pod.\n\n```bash\nkubectl run web-pod --image=httpd:alpine --dry-run=client -o yaml | kubectl apply -f -\n```",
+  "description": "## Generowanie i stosowanie manifestów za pomocą Dry Run\n\nZamiast pisać YAML od zera, możesz używać `kubectl` do generowania szablonów przez `--dry-run=client -o yaml`, a następnie je stosować.\n\n**Twoje zadanie:**\n\nUżyj `kubectl run` z `--dry-run=client -o yaml`, aby wygenerować manifest Poda dla `web-pod` używającego obrazu `httpd:alpine`, a następnie przekaż go bezpośrednio do `kubectl apply -f -`, aby utworzyć poda.\n\n```bash\nkubectl run web-pod --image=httpd:alpine --dry-run=client -o yaml | kubectl apply -f -\n```",
   "hints": [
     {
-      "title": "Combine dry-run with apply",
-      "body": "Chain kubectl run --dry-run=client -o yaml with kubectl apply -f - using a pipe.",
+      "title": "Połącz dry-run z apply",
+      "body": "Połącz kubectl run --dry-run=client -o yaml z kubectl apply -f - używając potoku.",
       "command": "kubectl run web-pod --image=httpd:alpine --dry-run=client -o yaml | kubectl apply -f -"
     }
   ],
@@ -17,13 +17,13 @@
   "validation": {
     "commands": [
       {
-        "description": "Pod 'web-pod' exists",
+        "description": "Pod 'web-pod' istnieje",
         "command": "kubectl get pod web-pod -o jsonpath='{.metadata.name}'",
         "expected_output": "web-pod",
         "match": "exact"
       },
       {
-        "description": "Pod uses httpd:alpine image",
+        "description": "Pod używa obrazu httpd:alpine",
         "command": "kubectl get pod web-pod -o jsonpath='{.spec.containers[0].image}'",
         "expected_output": "httpd:alpine",
         "match": "exact"

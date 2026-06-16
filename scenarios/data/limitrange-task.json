@@ -1,15 +1,15 @@
 {
   "id": "limitrange-task",
-  "title": "LimitRange for Default Container Limits",
+  "title": "LimitRange dla domyślnych limitów kontenera",
   "category": "Workloads & Scheduling",
   "difficulty": "Medium",
   "type": "task",
   "weight": 6,
-  "description": "## LimitRange\n\nA **LimitRange** sets default resource requests/limits for containers in a namespace. Any container created without explicit limits will automatically get the LimitRange defaults.\n\n**Your task:**\n\nCreate a namespace `bounded-ns` and a LimitRange named `default-limits` that sets:\n- Default CPU limit: `200m`\n- Default CPU request: `100m`\n- Default Memory limit: `256Mi`\n- Default Memory request: `128Mi`",
+  "description": "## LimitRange\n\n**LimitRange** ustawia domyślne żądania/limity zasobów dla kontenerów w przestrzeni nazw. Każdy kontener utworzony bez jawnych limitów automatycznie otrzyma wartości domyślne z LimitRange.\n\n**Twoje zadanie:**\n\nUtwórz przestrzeń nazw `bounded-ns` i LimitRange o nazwie `default-limits` ustawiający:\n- Domyślny limit CPU: `200m`\n- Domyślne żądanie CPU: `100m`\n- Domyślny limit pamięci: `256Mi`\n- Domyślne żądanie pamięci: `128Mi`",
   "hints": [
     {
-      "title": "LimitRange manifest",
-      "body": "Use `type: Container` and the `default`/`defaultRequest` fields inside `spec.limits[]`.",
+      "title": "Manifest LimitRange",
+      "body": "Użyj `type: Container` i pól `default`/`defaultRequest` wewnątrz `spec.limits[]`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: LimitRange\nmetadata:\n  name: default-limits\n  namespace: bounded-ns\nspec:\n  limits:\n  - type: Container\n    default:\n      cpu: \"200m\"\n      memory: \"256Mi\"\n    defaultRequest:\n      cpu: \"100m\"\n      memory: \"128Mi\"\nEOF"
     }
   ],
@@ -21,19 +21,19 @@
   "validation": {
     "commands": [
       {
-        "description": "LimitRange 'default-limits' exists in bounded-ns",
+        "description": "LimitRange 'default-limits' istnieje w bounded-ns",
         "command": "kubectl get limitrange default-limits -n bounded-ns -o jsonpath='{.metadata.name}'",
         "expected_output": "default-limits",
         "match": "exact"
       },
       {
-        "description": "Default CPU limit is 200m",
+        "description": "Domyślny limit CPU to 200m",
         "command": "kubectl get limitrange default-limits -n bounded-ns -o jsonpath='{.spec.limits[0].default.cpu}'",
         "expected_output": "200m",
         "match": "exact"
       },
       {
-        "description": "Default memory limit is 256Mi",
+        "description": "Domyślny limit pamięci to 256Mi",
         "command": "kubectl get limitrange default-limits -n bounded-ns -o jsonpath='{.spec.limits[0].default.memory}'",
         "expected_output": "256Mi",
         "match": "exact"

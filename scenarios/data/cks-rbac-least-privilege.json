@@ -1,15 +1,15 @@
 {
   "id": "cks-rbac-least-privilege",
-  "title": "RBAC Least Privilege",
+  "title": "RBAC z zasadą minimalnych uprawnień",
   "category": "Cluster Security",
   "difficulty": "Medium",
   "type": "task",
   "weight": 4,
-  "description": "## Role-Based Access Control\n\nService Accounts should only be granted the permissions they explicitly need.\n\n**Your task:**\n\nCreate a Role named `pod-reader` in the `default` namespace that only allows the verbs `get`, `list`, and `watch` on the `pods` resource. Then, bind this Role to a ServiceAccount named `read-only-sa` using a RoleBinding named `read-only-binding`.\n\n```bash\n# Verify your RBAC setup:\nkubectl auth can-i list pods --as=system:serviceaccount:default:read-only-sa\n```",
+  "description": "## Kontrola dostępu oparta na rolach\n\nKonta serwisowe powinny otrzymywać tylko te uprawnienia, których jawnie potrzebują.\n\n**Twoje zadanie:**\n\nUtwórz Role o nazwie `pod-reader` w przestrzeni nazw `default`, która zezwala tylko na verby `get`, `list` i `watch` dla zasobu `pods`. Następnie powiąż tę Role z ServiceAccount o nazwie `read-only-sa` za pomocą RoleBinding o nazwie `read-only-binding`.\n\n```bash\n# Weryfikacja konfiguracji RBAC:\nkubectl auth can-i list pods --as=system:serviceaccount:default:read-only-sa\n```",
   "hints": [
     {
-      "title": "Imperative commands",
-      "body": "You can create all 3 resources using imperative commands: create serviceaccount, create role, create rolebinding.",
+      "title": "Komendy imperatywne",
+      "body": "Możesz utworzyć wszystkie 3 zasoby za pomocą komend imperatywnych: create serviceaccount, create role, create rolebinding.",
       "command": "kubectl create sa read-only-sa && kubectl create role pod-reader --verb=get,list,watch --resource=pods && kubectl create rolebinding read-only-binding --role=pod-reader --serviceaccount=default:read-only-sa"
     }
   ],
@@ -17,19 +17,19 @@
   "validation": {
     "commands": [
       {
-        "description": "ServiceAccount read-only-sa exists",
+        "description": "ServiceAccount read-only-sa istnieje",
         "command": "kubectl get sa read-only-sa -o jsonpath='{.metadata.name}'",
         "expected_output": "read-only-sa",
         "match": "exact"
       },
       {
-        "description": "Role allows list pods",
+        "description": "Role zezwala na list pods",
         "command": "kubectl auth can-i list pods --as=system:serviceaccount:default:read-only-sa",
         "expected_output": "yes",
         "match": "exact"
       },
       {
-        "description": "Role denies delete pods",
+        "description": "Role odmawia delete pods",
         "command": "kubectl auth can-i delete pods --as=system:serviceaccount:default:read-only-sa",
         "expected_output": "no",
         "match": "exact"

@@ -1,20 +1,20 @@
 {
   "id": "cks-tls-ingress",
-  "title": "Secure Ingress with TLS",
+  "title": "Zabezpieczanie Ingress protokołem TLS",
   "category": "Network Security",
   "difficulty": "Hard",
   "type": "task",
   "weight": 7,
-  "description": "## Secure Ingress with TLS\n\nExposing applications over HTTPS requires a TLS certificate stored as a Kubernetes Secret of type `kubernetes.io/tls`. The Ingress controller uses this secret to terminate TLS connections.\n\n**Your task:**\n\n1. A self-signed TLS certificate has been pre-generated at `/tmp/tls.crt` and `/tmp/tls.key`.\n2. A deployment `tls-app` and service `tls-svc` are already running.\n3. Create a **TLS Secret** named `app-tls` from the cert files.\n4. Create an **Ingress** named `tls-ingress` that:\n   - Routes traffic for host `secure.lab.local` to service `tls-svc` on port `80`\n   - Terminates TLS using the secret `app-tls`",
+  "description": "## Zabezpieczanie Ingress przez TLS\n\nUdostępnianie aplikacji przez HTTPS wymaga certyfikatu TLS przechowywanego jako Secret Kubernetes typu `kubernetes.io/tls`. Kontroler Ingress używa tego secretu do terminacji połączeń TLS.\n\n**Twoje zadanie:**\n\n1. Samopodpisany certyfikat TLS został wygenerowany pod `/tmp/tls.crt` i `/tmp/tls.key`.\n2. Deployment `tls-app` i serwis `tls-svc` już działają.\n3. Utwórz **TLS Secret** o nazwie `app-tls` z plików certyfikatu.\n4. Utwórz **Ingress** o nazwie `tls-ingress`, który:\n   - Kieruje ruch dla hosta `secure.lab.local` do serwisu `tls-svc` na porcie `80`\n   - Terminuje TLS używając secretu `app-tls`",
   "hints": [
     {
-      "title": "Create the TLS Secret",
-      "body": "Use `kubectl create secret tls` with `--cert` and `--key` flags pointing to the pre-generated files.",
+      "title": "Utwórz Secret TLS",
+      "body": "Użyj `kubectl create secret tls` z flagami `--cert` i `--key` wskazującymi na wygenerowane pliki.",
       "command": "kubectl create secret tls app-tls --cert=/tmp/tls.crt --key=/tmp/tls.key"
     },
     {
-      "title": "Create the TLS Ingress",
-      "body": "Add a `spec.tls[]` block referencing the secret name alongside `spec.rules[]`.",
+      "title": "Utwórz Ingress z TLS",
+      "body": "Dodaj blok `spec.tls[]` odwołujący się do nazwy secretu obok `spec.rules[]`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: tls-ingress\nspec:\n  tls:\n  - hosts:\n    - secure.lab.local\n    secretName: app-tls\n  rules:\n  - host: secure.lab.local\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: tls-svc\n            port:\n              number: 80\nEOF"
     }
   ],
@@ -32,25 +32,25 @@
   "validation": {
     "commands": [
       {
-        "description": "Secret 'app-tls' is of type kubernetes.io/tls",
+        "description": "Secret 'app-tls' ma typ kubernetes.io/tls",
         "command": "kubectl get secret app-tls -o jsonpath='{.type}'",
         "expected_output": "kubernetes.io/tls",
         "match": "exact"
       },
       {
-        "description": "Ingress 'tls-ingress' exists",
+        "description": "Ingress 'tls-ingress' istnieje",
         "command": "kubectl get ingress tls-ingress -o jsonpath='{.metadata.name}'",
         "expected_output": "tls-ingress",
         "match": "exact"
       },
       {
-        "description": "Ingress uses TLS secret 'app-tls'",
+        "description": "Ingress używa secretu TLS 'app-tls'",
         "command": "kubectl get ingress tls-ingress -o jsonpath='{.spec.tls[0].secretName}'",
         "expected_output": "app-tls",
         "match": "exact"
       },
       {
-        "description": "Ingress routes host secure.lab.local",
+        "description": "Ingress kieruje ruch dla hosta secure.lab.local",
         "command": "kubectl get ingress tls-ingress -o jsonpath='{.spec.rules[0].host}'",
         "expected_output": "secure.lab.local",
         "match": "exact"

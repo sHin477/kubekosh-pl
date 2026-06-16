@@ -1,20 +1,20 @@
 {
   "id": "pod-disruption-budget-task",
-  "title": "Configure a PodDisruptionBudget",
+  "title": "Konfiguracja PodDisruptionBudget",
   "category": "Cluster Administration",
   "difficulty": "Medium",
   "type": "task",
   "weight": 6,
-  "description": "## PodDisruptionBudget\n\nA **PodDisruptionBudget (PDB)** limits the number of pods of a replicated application that are down simultaneously during voluntary disruptions (node drains, cluster upgrades). It is a critical CKA topic.\n\n**Your task:**\n\nA Deployment named `pdb-app` with **3 replicas** is already running. Create a **PodDisruptionBudget** named `web-pdb` in the `default` namespace that:\n- Applies to pods with the label `app=pdb-app`\n- Ensures **at least 2 pods** are always available (`minAvailable: 2`)\n\n```bash\n# Verify:\nkubectl get pdb web-pdb\n```",
+  "description": "## PodDisruptionBudget\n\n**PodDisruptionBudget (PDB)** ogranicza liczbę podów zreplikowanej aplikacji, które mogą być jednocześnie niedostępne podczas dobrowolnych zakłóceń (drainowanie węzłów, aktualizacje klastra). Jest kluczowym tematem na egzaminie CKA.\n\n**Twoje zadanie:**\n\nDeployment o nazwie `pdb-app` z **3 replikami** już działa. Utwórz **PodDisruptionBudget** o nazwie `web-pdb` w przestrzeni nazw `default`, który:\n- Stosuje się do podów z etykietą `app=pdb-app`\n- Zapewnia, że **co najmniej 2 pody** są zawsze dostępne (`minAvailable: 2`)\n\n```bash\n# Weryfikacja:\nkubectl get pdb web-pdb\n```",
   "hints": [
     {
-      "title": "PodDisruptionBudget manifest",
-      "body": "Use `spec.minAvailable` (integer or percentage) and `spec.selector.matchLabels` to target the right pods.",
+      "title": "Manifest PodDisruptionBudget",
+      "body": "Użyj `spec.minAvailable` (liczba całkowita lub procent) i `spec.selector.matchLabels`, aby wskazać na właściwe pody.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: policy/v1\nkind: PodDisruptionBudget\nmetadata:\n  name: web-pdb\nspec:\n  minAvailable: 2\n  selector:\n    matchLabels:\n      app: pdb-app\nEOF"
     },
     {
-      "title": "Check the PDB status",
-      "body": "After creating the PDB, check `kubectl get pdb web-pdb` — the ALLOWED DISRUPTIONS column shows how many pods can be disrupted at once.",
+      "title": "Sprawdź status PDB",
+      "body": "Po utworzeniu PDB sprawdź `kubectl get pdb web-pdb` — kolumna ALLOWED DISRUPTIONS pokazuje ile podów może być jednocześnie zakłócone.",
       "command": "kubectl get pdb web-pdb -o wide"
     }
   ],
@@ -29,25 +29,25 @@
   "validation": {
     "commands": [
       {
-        "description": "PDB 'web-pdb' exists",
+        "description": "PDB 'web-pdb' istnieje",
         "command": "kubectl get pdb web-pdb -o jsonpath='{.metadata.name}'",
         "expected_output": "web-pdb",
         "match": "exact"
       },
       {
-        "description": "minAvailable is 2",
+        "description": "minAvailable wynosi 2",
         "command": "kubectl get pdb web-pdb -o jsonpath='{.spec.minAvailable}'",
         "expected_output": "2",
         "match": "exact"
       },
       {
-        "description": "PDB selector targets app=pdb-app",
+        "description": "Selektor PDB wskazuje na app=pdb-app",
         "command": "kubectl get pdb web-pdb -o jsonpath='{.spec.selector.matchLabels.app}'",
         "expected_output": "pdb-app",
         "match": "exact"
       },
       {
-        "description": "Deployment 'pdb-app' has 3 replicas",
+        "description": "Deployment 'pdb-app' ma 3 repliki",
         "command": "kubectl get deployment pdb-app -o jsonpath='{.spec.replicas}'",
         "expected_output": "3",
         "match": "exact"

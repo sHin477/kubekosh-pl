@@ -1,25 +1,25 @@
 {
   "id": "broken-deployment",
-  "title": "Debug a Failing Deployment",
+  "title": "Debugowanie niedziałającego Deployment",
   "category": "Troubleshooting",
   "difficulty": "Medium",
   "type": "task",
   "weight": 8,
-  "description": "## Fix the Broken Deployment\n\nA deployment has been pre-created in the `debug` namespace but its pods are not running.\n\n**Your task:** Identify the problem and fix it so that the deployment has **all 3 pods in Ready state**.\n\n> Start by describing the deployment and its pods to find clues about what's wrong.",
+  "description": "## Naprawianie niedziałającego Deployment\n\nDeployment został wcześniej utworzony w przestrzeni nazw `debug`, ale jego pody nie działają.\n\n**Twoje zadanie:** Zidentyfikuj problem i napraw go tak, aby Deployment miał **wszystkie 3 pody w stanie Ready**.\n\n> Zacznij od opisania Deployment i jego podów, aby znaleźć wskazówki dotyczące problemu.",
   "hints": [
     {
-      "title": "Inspect the deployment",
-      "body": "Start by listing pods in the debug namespace and describing the failing ones.",
+      "title": "Sprawdź Deployment",
+      "body": "Zacznij od wylistowania podów w przestrzeni nazw debug i opisania tych, które nie działają.",
       "command": "kubectl get pods -n debug\nkubectl describe pod -n debug -l app=broken-app"
     },
     {
-      "title": "Check events",
-      "body": "The Events section in `kubectl describe` usually tells you exactly what's wrong — look for ImagePullBackOff, OOMKilled, or probe failures.",
+      "title": "Sprawdź zdarzenia",
+      "body": "Sekcja Events w `kubectl describe` zazwyczaj mówi dokładnie co jest nie tak — szukaj ImagePullBackOff, OOMKilled lub błędów sond.",
       "command": "kubectl describe deployment broken-app -n debug"
     },
     {
-      "title": "Fix the image tag",
-      "body": "If the image tag doesn't exist, update it to a valid one using `kubectl set image`.",
+      "title": "Napraw tag obrazu",
+      "body": "Jeśli tag obrazu nie istnieje, zaktualizuj go do poprawnego za pomocą `kubectl set image`.",
       "command": "kubectl set image deployment/broken-app nginx=nginx:1.25 -n debug"
     }
   ],
@@ -32,16 +32,16 @@
     }
   ],
   "validation": {
-    "description": "Checks that the broken-app deployment in the debug namespace has 3 ready replicas.",
+    "description": "Sprawdza, czy Deployment 'broken-app' w przestrzeni nazw debug ma 3 gotowe repliki.",
     "commands": [
       {
-        "description": "Deployment 'broken-app' has 3 ready replicas",
+        "description": "Deployment 'broken-app' ma 3 gotowe repliki",
         "command": "kubectl get deployment broken-app -n debug -o jsonpath='{.status.readyReplicas}' 2>/dev/null | grep -v '^$' || echo 0",
         "expected_output": "3",
         "match": "exact"
       },
       {
-        "description": "No pods in ImagePullBackOff state",
+        "description": "Brak podów w stanie ImagePullBackOff",
         "command": "kubectl get pods -n debug --no-headers 2>/dev/null | awk '{print $3}' | grep -c 'ImagePullBackOff\\|ErrImagePull' || true",
         "expected_output": "0",
         "match": "exact"

@@ -1,15 +1,15 @@
 {
   "id": "node-taint-toleration",
-  "title": "Taints and Tolerations",
+  "title": "Skazy (Taints) i tolerancje (Tolerations)",
   "category": "Cluster Administration",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## Taints and Tolerations\n\nTaints allow a node to **repel** pods. A toleration on a pod allows it to be scheduled onto a tainted node.\n\nThe node `k8s-lab` has been tainted with `env=gpu:NoSchedule`.\n\n**Your task:**\n\nCreate a Pod named `gpu-pod` using `nginx:alpine` that tolerates the taint `env=gpu:NoSchedule` so it can be scheduled on this node.\n\n```bash\nkubectl describe node k8s-lab | grep -A5 Taints\n```",
+  "description": "## Skazy i tolerancje\n\nSkazy pozwalają węzłowi **odpychać** pody. Tolerancja na podzie pozwala mu być zaplanowanym na węźle ze skazą.\n\nWęzeł `k8s-lab` ma skazę `env=gpu:NoSchedule`.\n\n**Twoje zadanie:**\n\nUtwórz Pod o nazwie `gpu-pod` używający `nginx:alpine`, który toleruje skazę `env=gpu:NoSchedule`, aby mógł być zaplanowany na tym węźle.\n\n```bash\nkubectl describe node k8s-lab | grep -A5 Taints\n```",
   "hints": [
     {
-      "title": "Toleration structure",
-      "body": "Add a `tolerations` block under `spec`. Match `key`, `operator`, `value`, and `effect` to the node taint.",
+      "title": "Struktura tolerancji",
+      "body": "Dodaj blok `tolerations` w `spec`. Dopasuj `key`, `operator`, `value` i `effect` do skazy węzła.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: gpu-pod\nspec:\n  tolerations:\n  - key: \"env\"\n    operator: \"Equal\"\n    value: \"gpu\"\n    effect: \"NoSchedule\"\n  containers:\n  - name: app\n    image: nginx:alpine\nEOF"
     }
   ],
@@ -21,19 +21,19 @@
   "validation": {
     "commands": [
       {
-        "description": "Node has taint env=gpu:NoSchedule",
+        "description": "Węzeł ma skazę env=gpu:NoSchedule",
         "command": "kubectl get node k8s-lab -o jsonpath='{.spec.taints[*].key}'",
         "expected_output": "env",
         "match": "contains"
       },
       {
-        "description": "Pod 'gpu-pod' has toleration for key 'env'",
+        "description": "Pod 'gpu-pod' ma tolerancję dla klucza 'env'",
         "command": "kubectl get pod gpu-pod -o jsonpath='{.spec.tolerations[*].key}'",
         "expected_output": "env",
         "match": "contains"
       },
       {
-        "description": "Pod 'gpu-pod' toleration effect is NoSchedule",
+        "description": "Efekt tolerancji 'gpu-pod' to NoSchedule",
         "command": "kubectl get pod gpu-pod -o jsonpath='{.spec.tolerations[*].effect}'",
         "expected_output": "NoSchedule",
         "match": "contains"

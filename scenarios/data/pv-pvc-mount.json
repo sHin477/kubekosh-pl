@@ -1,46 +1,46 @@
 {
   "id": "pv-pvc-mount",
-  "title": "Persistent Storage with PV and PVC",
+  "title": "Trwałe przechowywanie danych z PV i PVC",
   "category": "Storage",
   "difficulty": "Medium",
   "type": "task",
   "weight": 7,
-  "description": "## Attach Persistent Storage to a Pod\n\nA stateful application needs data to survive pod restarts.\n\n**Your tasks:**\n1. Create a **PersistentVolumeClaim** named `local-pvc` in the `default` namespace requesting `200Mi` with:\n   - Access mode: `ReadWriteOnce`\n   - StorageClass: `local-path` (available in this cluster via k3s)\n2. Create a **Pod** named `storage-pod` using image `nginx:1.25` that mounts the PVC at `/data`\n3. Write a file inside the pod at `/data/hello.txt` with content `hello-k8s`",
+  "description": "## Dołączanie trwałego przechowywania do Poda\n\nAplikacja stanowa potrzebuje, aby dane przetrwały restartowanie podów.\n\n**Twoje zadania:**\n1. Utwórz **PersistentVolumeClaim** o nazwie `local-pvc` w przestrzeni nazw `default` żądający `200Mi` z:\n   - Tryb dostępu: `ReadWriteOnce`\n   - StorageClass: `local-path` (dostępna w tym klastrze przez k3s)\n2. Utwórz **Pod** o nazwie `storage-pod` używający obrazu `nginx:1.25`, który montuje PVC w `/data`\n3. Zapisz plik wewnątrz poda pod `/data/hello.txt` z zawartością `hello-k8s`",
   "hints": [
     {
-      "title": "Create the PVC",
-      "body": "Use storageClassName: local-path to use the k3s built-in dynamic provisioner. No PV needs to be created manually.",
+      "title": "Utwórz PVC",
+      "body": "Użyj storageClassName: local-path, aby skorzystać z wbudowanego dynamicznego provisjonera k3s. Nie trzeba ręcznie tworzyć PV.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: local-pvc\nspec:\n  accessModes: [ReadWriteOnce]\n  storageClassName: local-path\n  resources:\n    requests:\n      storage: 200Mi\nEOF"
     },
     {
-      "title": "Create the Pod with PVC mount",
-      "body": "Reference the PVC by name under volumes and mount it in the container.",
+      "title": "Utwórz Pod z montowaniem PVC",
+      "body": "Odwołaj się do PVC po nazwie w sekcji wolumenów i zamontuj go w kontenerze.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: storage-pod\nspec:\n  containers:\n  - name: app\n    image: nginx:1.25\n    volumeMounts:\n    - name: data\n      mountPath: /data\n  volumes:\n  - name: data\n    persistentVolumeClaim:\n      claimName: local-pvc\nEOF"
     },
     {
-      "title": "Write file into the pod",
-      "body": "Use kubectl exec to write a file into the mounted volume.",
+      "title": "Zapisz plik do poda",
+      "body": "Użyj kubectl exec, aby zapisać plik do zamontowanego wolumenu.",
       "command": "kubectl exec storage-pod -- sh -c 'echo hello-k8s > /data/hello.txt'"
     }
   ],
   "setup_commands": [],
   "validation": {
-    "description": "Validates PV, PVC binding, pod running, and file written to the volume.",
+    "description": "Weryfikuje powiązanie PV/PVC, działający pod i plik zapisany na wolumenie.",
     "commands": [
       {
-        "description": "PVC local-pvc is Bound",
+        "description": "PVC local-pvc jest powiązany (Bound)",
         "command": "kubectl get pvc local-pvc -o jsonpath='{.status.phase}'",
         "expected_output": "Bound",
         "match": "exact"
       },
       {
-        "description": "Pod 'storage-pod' is Running",
+        "description": "Pod 'storage-pod' jest Running",
         "command": "kubectl get pod storage-pod -o jsonpath='{.status.phase}'",
         "expected_output": "Running",
         "match": "exact"
       },
       {
-        "description": "File /data/hello.txt contains 'hello-k8s'",
+        "description": "Plik /data/hello.txt zawiera 'hello-k8s'",
         "command": "kubectl exec storage-pod -- cat /data/hello.txt",
         "expected_output": "hello-k8s",
         "match": "contains"

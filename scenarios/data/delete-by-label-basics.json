@@ -1,15 +1,15 @@
 {
   "id": "delete-by-label-basics",
-  "title": "Bulk Deletion by Label",
+  "title": "Masowe usuwanie zasobów po etykiecie",
   "category": "Core Concepts",
   "difficulty": "Easy",
   "type": "task",
   "weight": 3,
-  "description": "## Bulk Deletion by Label\n\nYou can use label selectors (`-l`) to perform bulk operations on resources.\n\n**Your task:**\n\nThere are 5 pods running in the default namespace. Delete **only** the pods that have the label `env=dev`. Leave the `env=prod` pods running.\n\n```bash\n# Verify which pods are left:\nkubectl get pods --show-labels\n```",
+  "description": "## Masowe usuwanie po etykiecie\n\nMożesz używać selektorów etykiet (`-l`) do wykonywania operacji masowych na zasobach.\n\n**Twoje zadanie:**\n\nW przestrzeni nazw default działa 5 podów. Usuń **tylko** pody z etykietą `env=dev`. Pozostaw działające pody `env=prod`.\n\n```bash\n# Weryfikacja które pody pozostały:\nkubectl get pods --show-labels\n```",
   "hints": [
     {
-      "title": "Delete with selector",
-      "body": "Use `kubectl delete pods` with the `-l` flag.",
+      "title": "Usuwanie z selektorem",
+      "body": "Użyj `kubectl delete pods` z flagą `-l`.",
       "command": "kubectl delete pods -l env=dev"
     }
   ],
@@ -33,13 +33,13 @@
   "validation": {
     "commands": [
       {
-        "description": "No 'env=dev' pods exist",
+        "description": "Brak podów 'env=dev'",
         "command": "kubectl get pods -l env=dev --no-headers 2>/dev/null | wc -l | tr -d ' '",
         "expected_output": "0",
         "match": "exact"
       },
       {
-        "description": "Prod pods are still running",
+        "description": "Pody prod nadal działają",
         "command": "kubectl get pods -l env=prod --no-headers 2>/dev/null | wc -l | tr -d ' '",
         "expected_output": "2",
         "match": "exact"

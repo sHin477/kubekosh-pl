@@ -1,15 +1,15 @@
 {
   "id": "cks-drop-capabilities",
-  "title": "Drop Linux Capabilities",
+  "title": "Usuwanie uprawnień Linuksa (Capabilities)",
   "category": "Workload Security",
   "difficulty": "Medium",
   "type": "task",
   "weight": 5,
-  "description": "## Drop Linux Capabilities\n\nBy default, containers are granted a set of Linux capabilities. Dropping ALL capabilities and adding back only what is explicitly needed follows the principle of least privilege and is a CKS exam requirement.\n\n**Your task:**\n\nCreate a Pod named `nocaps-pod` using `nginx:alpine` with the following capability configuration in the container `securityContext`:\n- Drop **ALL** capabilities\n- Add back only **`NET_BIND_SERVICE`** (required by nginx to bind to port 80)\n\n```bash\n# Verify:\nkubectl get pod nocaps-pod -o jsonpath='{.spec.containers[0].securityContext.capabilities}'\n```",
+  "description": "## Uprawnienia Linuksa (Linux Capabilities)\n\nDomyślnie kontenery otrzymują zestaw uprawnień Linuksa. Usunięcie WSZYSTKICH uprawnień i dodanie z powrotem tylko tych jawnie potrzebnych jest zgodne z zasadą minimalnych uprawnień i wymagane na egzaminie CKS.\n\n**Twoje zadanie:**\n\nUtwórz Pod o nazwie `nocaps-pod` używający `nginx:alpine` z następującą konfiguracją uprawnień w `securityContext` kontenera:\n- Usuń **WSZYSTKIE** uprawnienia\n- Dodaj z powrotem tylko **`NET_BIND_SERVICE`** (wymagane przez nginx do bindowania portu 80)\n\n```bash\n# Weryfikacja:\nkubectl get pod nocaps-pod -o jsonpath='{.spec.containers[0].securityContext.capabilities}'\n```",
   "hints": [
     {
-      "title": "capabilities drop and add",
-      "body": "Under `spec.containers[].securityContext.capabilities`, use `drop: [\"ALL\"]` and `add: [\"NET_BIND_SERVICE\"]`.",
+      "title": "capabilities drop i add",
+      "body": "W `spec.containers[].securityContext.capabilities` użyj `drop: [\"ALL\"]` i `add: [\"NET_BIND_SERVICE\"]`.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nocaps-pod\nspec:\n  containers:\n  - name: app\n    image: nginx:alpine\n    securityContext:\n      capabilities:\n        drop:\n        - ALL\n        add:\n        - NET_BIND_SERVICE\nEOF"
     }
   ],
@@ -17,19 +17,19 @@
   "validation": {
     "commands": [
       {
-        "description": "Pod 'nocaps-pod' exists",
+        "description": "Pod 'nocaps-pod' istnieje",
         "command": "kubectl get pod nocaps-pod -o jsonpath='{.metadata.name}'",
         "expected_output": "nocaps-pod",
         "match": "exact"
       },
       {
-        "description": "ALL capabilities are dropped",
+        "description": "Wszystkie uprawnienia są usunięte",
         "command": "kubectl get pod nocaps-pod -o jsonpath='{.spec.containers[0].securityContext.capabilities.drop[0]}'",
         "expected_output": "ALL",
         "match": "exact"
       },
       {
-        "description": "NET_BIND_SERVICE is added back",
+        "description": "NET_BIND_SERVICE jest dodane z powrotem",
         "command": "kubectl get pod nocaps-pod -o jsonpath='{.spec.containers[0].securityContext.capabilities.add[0]}'",
         "expected_output": "NET_BIND_SERVICE",
         "match": "exact"

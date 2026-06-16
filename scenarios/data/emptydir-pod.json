@@ -1,15 +1,15 @@
 {
   "id": "emptydir-pod",
-  "title": "Shared emptyDir Volume Between Containers",
+  "title": "Współdzielony wolumen emptyDir między kontenerami",
   "category": "Storage",
   "difficulty": "Easy",
   "type": "task",
   "weight": 5,
-  "description": "## Shared emptyDir Volume\n\nAn `emptyDir` volume is created when a Pod is assigned to a node and exists as long as the Pod runs. It is ideal for sharing data between containers in the same pod (e.g., sidecar patterns).\n\n**Your task:**\n\nCreate a Pod named `shared-data` with two containers:\n1. **writer** (`busybox:1.36`) — writes `hello-kube` to `/shared/message.txt` then sleeps\n2. **reader** (`busybox:1.36`) — reads and prints `/shared/message.txt` then sleeps\n\nBoth containers mount an `emptyDir` volume at `/shared`.",
+  "description": "## Współdzielony wolumen emptyDir\n\nWolumen `emptyDir` jest tworzony, gdy Pod jest przypisywany do węzła i istnieje tak długo jak Pod działa. Jest idealny do współdzielenia danych między kontenerami w tym samym podzie (np. wzorce sidecar).\n\n**Twoje zadanie:**\n\nUtwórz Pod o nazwie `shared-data` z dwoma kontenerami:\n1. **writer** (`busybox:1.36`) — zapisuje `hello-kube` do `/shared/message.txt` i czeka\n2. **reader** (`busybox:1.36`) — odczytuje i wyświetla `/shared/message.txt` i czeka\n\nOba kontenery montują wolumen `emptyDir` w `/shared`.",
   "hints": [
     {
-      "title": "emptyDir shared volume manifest",
-      "body": "Define a single volume of type `emptyDir: {}` and mount it in both containers under the same path.",
+      "title": "Manifest współdzielonego wolumenu emptyDir",
+      "body": "Zdefiniuj pojedynczy wolumen typu `emptyDir: {}` i zamontuj go w obu kontenerach pod tą samą ścieżką.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: v1\nkind: Pod\nmetadata:\n  name: shared-data\nspec:\n  containers:\n  - name: writer\n    image: busybox:1.36\n    command: [\"sh\",\"-c\",\"echo hello-kube > /shared/message.txt && sleep 3600\"]\n    volumeMounts:\n    - name: shared-vol\n      mountPath: /shared\n  - name: reader\n    image: busybox:1.36\n    command: [\"sh\",\"-c\",\"sleep 5 && cat /shared/message.txt && sleep 3600\"]\n    volumeMounts:\n    - name: shared-vol\n      mountPath: /shared\n  volumes:\n  - name: shared-vol\n    emptyDir: {}\nEOF"
     }
   ],
@@ -17,25 +17,25 @@
   "validation": {
     "commands": [
       {
-        "description": "Pod 'shared-data' exists",
+        "description": "Pod 'shared-data' istnieje",
         "command": "kubectl get pod shared-data -o jsonpath='{.metadata.name}'",
         "expected_output": "shared-data",
         "match": "exact"
       },
       {
-        "description": "Pod has 2 containers",
+        "description": "Pod ma 2 kontenery",
         "command": "kubectl get pod shared-data -o jsonpath='{range .spec.containers[*]}{.name}{\"\\n\"}{end}'",
         "expected_output": "writer",
         "match": "contains"
       },
       {
-        "description": "Volume type is emptyDir",
+        "description": "Typ wolumenu to emptyDir",
         "command": "kubectl get pod shared-data -o jsonpath='{.spec.volumes[0].emptyDir}'",
         "expected_output": "{}",
         "match": "contains"
       },
       {
-        "description": "Writer container mounts the shared volume",
+        "description": "Kontener writer montuje współdzielony wolumen",
         "command": "kubectl get pod shared-data -o jsonpath='{.spec.containers[0].volumeMounts[0].mountPath}'",
         "expected_output": "/shared",
         "match": "exact"

@@ -1,35 +1,35 @@
 {
   "id": "cks-mcq-audit-policy",
-  "title": "Kubernetes Audit Logging Levels",
+  "title": "Poziomy logowania audytu Kubernetes",
   "category": "Cluster Setup",
   "difficulty": "Medium",
   "type": "mcq",
   "weight": 3,
-  "description": "## Kubernetes Audit Logging\n\nYou are writing an audit policy for the kube-apiserver. You need to capture the **complete request AND response body** for all write operations on `secrets` in any namespace, so you have a full record of every secret modification.\n\nWhich audit level must you specify for these events?",
+  "description": "## Logowanie audytu Kubernetes\n\nPiszesz politykę audytu dla kube-apiserver. Chcesz rejestrować **kompletne treści żądania I odpowiedzi** dla wszystkich operacji zapisu na `secrets`, aby mieć pełny zapis każdej modyfikacji secretu.\n\nKtóry poziom audytu musisz określić dla tych zdarzeń?",
   "options": [
     {
       "id": "a",
-      "text": "`None` — discard all events matching this rule; nothing is logged"
+      "text": "`None` — odrzuca wszystkie zdarzenia pasujące do reguły; nic nie jest logowane"
     },
     {
       "id": "b",
-      "text": "`Metadata` — logs request metadata (user, verb, resource, timestamp) but not the request or response body"
+      "text": "`Metadata` — loguje metadane żądania (użytkownik, verb, zasób, czas) bez treści"
     },
     {
       "id": "c",
-      "text": "`Request` — logs metadata and the request body, but not the response body"
+      "text": "`Request` — loguje metadane i treść żądania, bez treści odpowiedzi"
     },
     {
       "id": "d",
-      "text": "`RequestResponse` — logs metadata, the full request body, and the full response body"
+      "text": "`RequestResponse` — loguje metadane, pełną treść żądania i pełną treść odpowiedzi"
     }
   ],
   "correct_option": "d",
-  "explanation": "Kubernetes audit levels in ascending verbosity: **None → Metadata → Request → RequestResponse**. `RequestResponse` is required when you need the complete picture — what was sent and what the API server returned. This is most important for sensitive resources like Secrets. The audit policy file is passed to kube-apiserver via `--audit-policy-file`. Note that `RequestResponse` is expensive; use `Metadata` for most resources.",
+  "explanation": "Poziomy audytu Kubernetes według rosnącej szczegółowości: **None → Metadata → Request → RequestResponse**. `RequestResponse` jest wymagany gdy potrzebny jest pełny obraz — co zostało wysłane i co zwrócił serwer API. Jest to szczególnie ważne dla wrażliwych zasobów jak Secrets. Uwaga: `RequestResponse` jest kosztowny; dla większości zasobów używaj `Metadata`.",
   "hints": [
     {
-      "title": "Audit policy levels",
-      "body": "The four levels: `None` (discard), `Metadata` (headers only), `Request` (+ request body), `RequestResponse` (+ response body). Configure via `--audit-policy-file` and `--audit-log-path` on the kube-apiserver.",
+      "title": "Poziomy polityki audytu",
+      "body": "Cztery poziomy: `None` (odrzuć), `Metadata` (tylko nagłówki), `Request` (+ ciało żądania), `RequestResponse` (+ ciało odpowiedzi). Konfigurowane przez `--audit-policy-file` i `--audit-log-path` na kube-apiserver.",
       "command": "# Example rule targeting Secrets at RequestResponse level:\n# - level: RequestResponse\n#   resources:\n#   - group: \"\"\n#     resources: [\"secrets\"]"
     }
   ],

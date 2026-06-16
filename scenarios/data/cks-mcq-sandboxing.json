@@ -1,35 +1,35 @@
 {
   "id": "cks-mcq-sandboxing",
-  "title": "Container Runtime Sandboxing",
+  "title": "Sandboxing środowisk uruchomieniowych kontenerów",
   "category": "System Hardening",
   "difficulty": "Hard",
   "type": "mcq",
   "weight": 3,
-  "description": "## Container Runtime Sandboxing\n\nA security team wants to run untrusted workloads with stronger isolation than the standard `runc` runtime — specifically, they want each container's system calls to be intercepted by a user-space kernel rather than reaching the host kernel directly.\n\nWhich solution achieves this, and how is it configured in Kubernetes?",
+  "description": "## Sandboxing środowiska uruchomieniowego kontenera\n\nZespół ds. bezpieczeństwa chce uruchamiać niezaufane workloady z silniejszą izolacją niż standardowe środowisko uruchomieniowe `runc` — konkretnie chce, aby wywołania systemowe każdego kontenera były przechwytywane przez jądro w przestrzeni użytkownika, a nie trafiały bezpośrednio do jądra hosta.\n\nKtóre rozwiązanie to umożliwia i jak jest konfigurowane w Kubernetes?",
   "options": [
     {
       "id": "a",
-      "text": "Seccomp with `RuntimeDefault` — restricts which syscalls are allowed via a BPF filter, but syscalls still reach the host kernel"
+      "text": "Seccomp z `RuntimeDefault` — ogranicza dozwolone syscalle przez filtr BPF, ale syscalle nadal trafiają do jądra hosta"
     },
     {
       "id": "b",
-      "text": "AppArmor with a `deny` profile — enforces path-based MAC policies but does not intercept syscalls"
+      "text": "AppArmor z profilem `deny` — egzekwuje polityki MAC oparte na ścieżkach, ale nie przechwytuje syscalli"
     },
     {
       "id": "c",
-      "text": "gVisor (`runsc`) via a `RuntimeClass` — intercepts all syscalls in user-space with its own kernel implementation, isolating the host kernel from the container"
+      "text": "gVisor (`runsc`) przez `RuntimeClass` — przechwytuje wszystkie syscalle w przestrzeni użytkownika za pomocą własnej implementacji jądra, izolując jądro hosta od kontenera"
     },
     {
       "id": "d",
-      "text": "A `PodDisruptionBudget` — prevents pod disruptions and provides workload isolation"
+      "text": "`PodDisruptionBudget` — zapobiega zakłóceniom podów i zapewnia izolację workloadów"
     }
   ],
   "correct_option": "c",
-  "explanation": "**gVisor** (`runsc`) is a user-space kernel from Google that intercepts all container system calls before they reach the host kernel, providing strong isolation. In Kubernetes it is configured via a **RuntimeClass** resource and referenced in a pod with `spec.runtimeClassName`. Kata Containers is a similar alternative using lightweight VMs. Seccomp filters syscalls but they still hit the host kernel. AppArmor enforces file-access policies, not syscall interception.",
+  "explanation": "**gVisor** (`runsc`) to jądro w przestrzeni użytkownika od Google, które przechwytuje wszystkie syscalle kontenerów przed dotarciem do jądra hosta, zapewniając silną izolację. W Kubernetes konfiguruje się go przez zasób **RuntimeClass** i odwołuje w podzie przez `spec.runtimeClassName`. Kata Containers to podobna alternatywa używająca lekkich VM. Seccomp filtruje syscalle, ale nadal trafiają do jądra hosta. AppArmor egzekwuje polityki dostępu do plików, a nie przechwytywanie syscalli.",
   "hints": [
     {
-      "title": "RuntimeClass and runtimeClassName",
-      "body": "Create a `RuntimeClass` that maps a name to the container runtime handler (e.g., `handler: runsc`). Reference it in a pod with `spec.runtimeClassName: <name>`.",
+      "title": "RuntimeClass i runtimeClassName",
+      "body": "Utwórz `RuntimeClass` mapujący nazwę do handlera środowiska uruchomieniowego (np. `handler: runsc`). Odwołaj się do niego w podzie przez `spec.runtimeClassName: <name>`.",
       "command": "kubectl explain runtimeclass\nkubectl explain pod.spec.runtimeClassName"
     }
   ],

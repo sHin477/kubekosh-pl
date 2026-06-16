@@ -1,20 +1,20 @@
 {
   "id": "extract-logs-basics",
-  "title": "Extract Container Logs",
+  "title": "Pobieranie logów kontenera",
   "category": "Troubleshooting",
   "difficulty": "Easy",
   "type": "task",
   "weight": 4,
-  "description": "## Extract Pod Logs\n\nA pod named `log-generator` is running and emitting log lines every second.\n\n**Your task:**\n\nUse `kubectl logs` to inspect the logs and confirm that the message `ERROR: Database connection failed` appears in the output.\n\n> Tip: Use `kubectl logs log-generator | grep ERROR` to filter.",
+  "description": "## Pobieranie logów Poda\n\nPod o nazwie `log-generator` działa i co sekundę emituje linie logów.\n\n**Twoje zadanie:**\n\nUżyj `kubectl logs`, aby sprawdzić logi i potwierdzić, że komunikat `ERROR: Database connection failed` pojawia się w wyniku.\n\n> Wskazówka: Użyj `kubectl logs log-generator | grep ERROR`, aby filtrować.",
   "hints": [
     {
-      "title": "View pod logs",
-      "body": "Use kubectl logs to stream the output of a running container.",
+      "title": "Przeglądaj logi poda",
+      "body": "Użyj kubectl logs, aby strumieniować wyjście działającego kontenera.",
       "command": "kubectl logs log-generator"
     },
     {
-      "title": "Filter logs",
-      "body": "Pipe kubectl logs into grep to find specific messages.",
+      "title": "Filtruj logi",
+      "body": "Przekaż kubectl logs przez grep, aby znaleźć konkretne komunikaty.",
       "command": "kubectl logs log-generator | grep ERROR"
     }
   ],
@@ -26,7 +26,7 @@
   "validation": {
     "commands": [
       {
-        "description": "Pod log-generator emits ERROR: Database connection failed",
+        "description": "Pod log-generator emituje ERROR: Database connection failed",
         "command": "kubectl logs log-generator 2>/dev/null",
         "expected_output": "ERROR: Database connection failed",
         "match": "contains"

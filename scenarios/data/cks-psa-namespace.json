@@ -1,15 +1,15 @@
 {
   "id": "cks-psa-namespace",
-  "title": "Pod Security Admission",
+  "title": "Dopuszczanie zabezpieczeń Podów (Pod Security Admission)",
   "category": "Cluster Security",
   "difficulty": "Easy",
   "type": "task",
   "weight": 4,
-  "description": "## Pod Security Admission (PSA)\n\nPod Security Admission replaced PodSecurityPolicies (PSP) to enforce security standards at the namespace level.\n\n**Your task:**\n\nA namespace named `secure-workloads` already exists. Add the necessary label to this namespace to **enforce** the `restricted` pod security standard.\n\n```bash\n# Verify your label:\nkubectl get ns secure-workloads --show-labels\n```",
+  "description": "## Pod Security Admission (PSA)\n\nPod Security Admission zastąpił PodSecurityPolicies (PSP) w egzekwowaniu standardów bezpieczeństwa na poziomie przestrzeni nazw.\n\n**Twoje zadanie:**\n\nPrzestrzeń nazw o nazwie `secure-workloads` już istnieje. Dodaj niezbędną etykietę do tej przestrzeni nazw, aby **egzekwować** standard bezpieczeństwa podów `restricted`.\n\n```bash\n# Weryfikacja etykiety:\nkubectl get ns secure-workloads --show-labels\n```",
   "hints": [
     {
-      "title": "Namespace Label",
-      "body": "Label the namespace with the `pod-security.kubernetes.io/enforce=restricted` key-value pair.",
+      "title": "Etykieta przestrzeni nazw",
+      "body": "Oznacz przestrzeń nazw parą klucz-wartość `pod-security.kubernetes.io/enforce=restricted`.",
       "command": "kubectl label ns secure-workloads pod-security.kubernetes.io/enforce=restricted"
     }
   ],
@@ -21,7 +21,7 @@
   "validation": {
     "commands": [
       {
-        "description": "Namespace secure-workloads is labeled",
+        "description": "Przestrzeń nazw secure-workloads ma etykietę",
         "command": "kubectl get ns secure-workloads -o jsonpath='{.metadata.labels.pod-security\\.kubernetes\\.io/enforce}'",
         "expected_output": "restricted",
         "match": "exact"

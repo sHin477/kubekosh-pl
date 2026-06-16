@@ -1,15 +1,15 @@
 {
   "id": "cks-egress-namespace",
-  "title": "Restrict Egress to Namespace",
+  "title": "Ograniczenie ruchu wyjściowego do przestrzeni nazw",
   "category": "Network Security",
   "difficulty": "Hard",
   "type": "task",
   "weight": 6,
-  "description": "## Namespace-Scoped Egress Network Policy\n\nFine-grained network policies can restrict pod traffic so that only pods within a specific namespace can communicate with each other.\n\n**Your task:**\n\nA namespace `frontend` and a namespace `backend` already exist. Create a NetworkPolicy named `allow-backend-only` in the `frontend` namespace that:\n\n- Applies to **all pods** in the `frontend` namespace\n- **Allows egress only** to pods in the `backend` namespace (matched by `namespaceSelector`)\n- **Denies all other egress** traffic\n\n```bash\n# Verify:\nkubectl get networkpolicy allow-backend-only -n frontend\n```",
+  "description": "## Egress NetworkPolicy ograniczona do przestrzeni nazw\n\nSzczegółowe polityki sieciowe mogą ograniczać ruch podów tak, aby komunikacja była możliwa tylko w obrębie konkretnej przestrzeni nazw.\n\n**Twoje zadanie:**\n\nIstnieją przestrzenie nazw `frontend` i `backend`. Utwórz NetworkPolicy o nazwie `allow-backend-only` w przestrzeni nazw `frontend`, która:\n\n- Stosuje się do **wszystkich podów** w przestrzeni nazw `frontend`\n- **Zezwala na egress tylko** do podów w przestrzeni nazw `backend` (dopasowanych przez `namespaceSelector`)\n- **Blokuje cały inny ruch** wychodzący\n\n```bash\n# Weryfikacja:\nkubectl get networkpolicy allow-backend-only -n frontend\n```",
   "hints": [
     {
-      "title": "namespaceSelector in Egress rule",
-      "body": "Use `spec.policyTypes: [Egress]` with an empty egress rule except for a `namespaceSelector` that matches the `backend` namespace label.",
+      "title": "namespaceSelector w regule Egress",
+      "body": "Użyj `spec.policyTypes: [Egress]` z pustą regułą egress poza `namespaceSelector` dopasowującym etykietę przestrzeni nazw backend.",
       "command": "cat <<EOF | kubectl apply -f -\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: allow-backend-only\n  namespace: frontend\nspec:\n  podSelector: {}\n  policyTypes:\n  - Egress\n  egress:\n  - to:\n    - namespaceSelector:\n        matchLabels:\n          kubernetes.io/metadata.name: backend\nEOF"
     }
   ],
@@ -24,19 +24,19 @@
   "validation": {
     "commands": [
       {
-        "description": "NetworkPolicy 'allow-backend-only' exists in frontend namespace",
+        "description": "NetworkPolicy 'allow-backend-only' istnieje w przestrzeni nazw frontend",
         "command": "kubectl get networkpolicy allow-backend-only -n frontend -o jsonpath='{.metadata.name}'",
         "expected_output": "allow-backend-only",
         "match": "exact"
       },
       {
-        "description": "Policy type is Egress only",
+        "description": "Typ polityki to tylko Egress",
         "command": "kubectl get networkpolicy allow-backend-only -n frontend -o jsonpath='{.spec.policyTypes[0]}'",
         "expected_output": "Egress",
         "match": "exact"
       },
       {
-        "description": "Policy uses namespaceSelector targeting backend namespace",
+        "description": "Polityka używa namespaceSelector wskazującego na backend",
         "command": "kubectl get networkpolicy allow-backend-only -n frontend -o jsonpath='{.spec.egress[0].to[0].namespaceSelector.matchLabels.kubernetes\\.io/metadata\\.name}'",
         "expected_output": "backend",
         "match": "exact"
