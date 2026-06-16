@@ -18,7 +18,7 @@
 | `README.md` | Pełne tłumaczenie dokumentacji |
 
 ---
-https://github.com/sHin477/kubekosh-pl/blob/main/KubeKosh-pl.png
+![Zrzut ekranu](https://github.com/sHin477/kubekosh-pl/blob/main/KubeKosh-pl.png).
 ---
 ## Instalacja
 
