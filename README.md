@@ -25,7 +25,7 @@
 ### Wymagania wstępne
 
 - **Docker** zainstalowany i działający: https://docs.docker.com/get-docker/
-- Terminal (PowerShell/cmd na Windows, Terminal na Mac/Linux)
+- Terminal (Terminal na Mac/Linux)
 
 ---
 
