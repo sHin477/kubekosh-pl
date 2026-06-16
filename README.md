@@ -136,4 +136,4 @@ Zmień port hosta (pierwsza liczba):
 sudo docker run -d --privileged --name kubekosh -p 8080:80 daniel4777/kubekosh-pl:latest
 # Otwórz: http://localhost:8080
 ```
-
+Serdecznie zapraszam do zapisów na nasze kursy https://grupadm.pl/
