@@ -1,0 +1,139 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Scenario panel */
+.scenarioWrap {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── Sidebar resize handle ────────────────────────────────────────────────── */
+.sidebarHandle {
+  flex-shrink: 0;
+  width: 5px;
+  cursor: ew-resize;
+  background: var(--border);
+  transition: background 0.15s;
+  position: relative;
+  z-index: 10;
+  user-select: none;
+}
+.sidebarHandle:hover,
+.sidebarHandle:active {
+  background: var(--green);
+}
+/* Grip indicator for sidebar */
+.sidebarHandle::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--border2);
+  pointer-events: none;
+}
+.sidebarHandle:hover::before,
+.sidebarHandle:active::before { 
+  background: var(--surface); 
+}
+
+/* ── Terminal resize handle ───────────────────────────────────────────────── */
+.termHandle {
+  flex-shrink: 0;
+  height: 5px;
+  cursor: ns-resize;
+  background: var(--border);
+  transition: background 0.15s;
+  position: relative;
+  z-index: 10;
+  user-select: none;
+}
+.termHandle:hover,
+.termHandle:active {
+  background: var(--green);
+}
+/* Grip indicator */
+.termHandle::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border2);
+  pointer-events: none;
+}
+.termHandle:hover::before,
+.termHandle:active::before { 
+  background: var(--surface); 
+}
+
+/* ── Terminal wrapper ─────────────────────────────────────────────────────── */
+.terminalWrap {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: height 0.15s ease;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 10px;
+  color: var(--text-3);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-family: var(--sans);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+
+.footerLink {
+  color: var(--text-2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.footerLink:hover {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+.heart {
+  display: inline-block;
+  font-size: 9px;
+  margin: 0 1px;
+  transform: translateY(-0.5px);
+}

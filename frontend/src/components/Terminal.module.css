@@ -1,0 +1,91 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: var(--term-bg);
+  overflow: hidden;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  height: 36px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.barLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  opacity: 0.9;
+}
+
+.barTitle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.barIcon {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.barRight { display: flex; gap: 8px; }
+
+.barBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--text-3);
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.12s;
+}
+.barBtn:hover { color: var(--text-2); border-color: var(--border2); }
+
+/*
+  Canonical xterm.js container pattern:
+  - xtermOuter: flex:1, position:relative → gives FitAddon a reliable size box
+  - terminal:   position:absolute, inset:0 → fills xtermOuter exactly
+  
+  This eliminates the black gap caused by xterm canvas not matching its container.
+*/
+.xtermOuter {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  /* height:0 override applied inline when collapsed, keeping DOM alive for PTY */
+}
+
+.terminal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
