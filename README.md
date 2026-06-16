@@ -1,4 +1,5 @@
 🇵🇱 Polska wersja językowa projektu zeborg/kubekosh. Interfejs użytkownika przetłumaczony na język polski — pełna funkcjonalność bez zmian.
+
 <p align="center">
   <a href="https://github.com/zeborg/kubekosh">
     <img src="assets/banner.png" alt="KubeKosh" width="600"/>
