@@ -1,7 +1,7 @@
 🇵🇱 Polska wersja językowa projektu zeborg/kubekosh. Interfejs użytkownika przetłumaczony na język polski — pełna funkcjonalność bez zmian.
 > Polski fork projektu KubeKosh autorstwa zeborg.
 >
-> Oryginalny projekt: https://github.com/zeborg/kubekosh
+> Oryginalny projekt: [zeborg/kubekosh](https://github.com/zeborg/kubekosh)
 
 <p align="center">
   <img src="./frontend/public/logo.svg" width="150"/>
@@ -35,7 +35,9 @@ KubeKosh uruchamia prawdziwy klaster K3s Kubernetes wewnątrz pojedynczego konte
 | `README.md` | Pełne tłumaczenie dokumentacji |
 
 ---
-![Zrzut ekranu](https://github.com/sHin477/kubekosh-pl/blob/main/KubeKosh-pl.png)
+## Zrzut ekranu
+
+![KubeKosh PL](./KubeKosh-pl.png)
 ---
 ## Instalacja
 
@@ -158,4 +160,8 @@ sudo docker run -d --privileged --name kubekosh -p 8080:80 daniel4777/kubekosh-p
 
 Więcej materiałów i szkoleń:
 
-https://grupadm.pl/ https://grupadm.pl/
+https://grupadm.pl/
+
+## Licencja
+
+Projekt bazuje na KubeKosh autorstwa zeborg i jest udostępniany zgodnie z licencją Apache 2.0.
