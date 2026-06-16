@@ -1,3 +1,4 @@
+![Zrzut ekranu](https://github.com/sHin477/kubekosh-pl/blob/main/frontend/public/logo.svg)
 # KubeKosh PL — Instrukcja instalacji i użytkowania
 
 ## Co zostało przetłumaczone
