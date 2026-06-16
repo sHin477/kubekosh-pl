@@ -1,10 +1,13 @@
 🇵🇱 Polska wersja językowa projektu zeborg/kubekosh. Interfejs użytkownika przetłumaczony na język polski — pełna funkcjonalność bez zmian.
+> Polski fork projektu KubeKosh autorstwa zeborg.
+>
+> Oryginalny projekt: https://github.com/zeborg/kubekosh
 
 <p align="center">
   <img src="./frontend/public/logo.svg" width="150"/>
 </p>
 
-<h1 align="center">KubeKosh</h1>
+<h1 align="center">KubeKosh-pl</h1>
 
 <p align="center">
   Własna platforma Kubernetes do nauki
@@ -151,4 +154,8 @@ Zmień port hosta (pierwsza liczba):
 sudo docker run -d --privileged --name kubekosh -p 8080:80 daniel4777/kubekosh-pl:latest
 # Otwórz: http://localhost:8080
 ```
-Serdecznie zapraszam do zapisów na nasze kursy https://grupadm.pl/
+## Szkolenia Kubernetes
+
+Więcej materiałów i szkoleń:
+
+https://grupadm.pl/ https://grupadm.pl/
