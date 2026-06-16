@@ -103,7 +103,7 @@ Następnie po edycji pliku JSON kliknij przycisk **↻** (Odśwież pamięć pod
 
 Następnie użytkownicy uruchomią projekt jedną komendą:
 
-```bash
+
 sudo docker run -d --privileged --name kubekosh -p 7554:80 daniel4777/kubekosh-pl:latest
 ```
 
