@@ -4,7 +4,7 @@
 > Oryginalny projekt: https://github.com/zeborg/kubekosh
 
 <p align="center">
-  <img src="./KubeKosh-pl.png" alt="KubeKosh PL" width="900">
+  <img src="./frontend/public/logo.svg" width="150"/>
 </p>
 
 <h1 align="center">KubeKosh-pl</h1>
