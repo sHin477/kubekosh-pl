@@ -1,7 +1,13 @@
 🇵🇱 Polska wersja językowa projektu zeborg/kubekosh. Interfejs użytkownika przetłumaczony na język polski — pełna funkcjonalność bez zmian.
 
 <p align="center">
-  <img src="./frontend/public/logo.svg" alt="KubeKosh Logo" width="180"/>
+  <img src="./frontend/public/logo.svg" width="150"/>
+</p>
+
+<h1 align="center">KubeKosh</h1>
+
+<p align="center">
+  Własna platforma Kubernetes do nauki
 </p>
 
 KubeKosh uruchamia prawdziwy klaster K3s Kubernetes wewnątrz pojedynczego kontenera Docker i łączy go z terminalem przeglądarkowym oraz automatyczną weryfikacją scenariuszy — bez potrzeby posiadania konta w chmurze czy lokalnego klastra.
