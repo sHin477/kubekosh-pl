@@ -19,12 +19,11 @@
 
 ---
 
-## CZĘŚĆ 1: Testowanie lokalne
+## Instalacja
 
 ### Wymagania wstępne
 
 - **Docker** zainstalowany i działający: https://docs.docker.com/get-docker/
-- **Git** zainstalowany
 - Terminal (PowerShell/cmd na Windows, Terminal na Mac/Linux)
 
 ---
