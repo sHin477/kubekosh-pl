@@ -1,4 +1,7 @@
-![Zrzut ekranu](https://github.com/sHin477/kubekosh-pl/blob/main/frontend/public/logo.svg)
+🇵🇱 Polska wersja językowa projektu zeborg/kubekosh. Interfejs użytkownika przetłumaczony na język polski — pełna funkcjonalność bez zmian.
+
+KubeKosh uruchamia prawdziwy klaster K3s Kubernetes wewnątrz pojedynczego kontenera Docker i łączy go z terminalem przeglądarkowym oraz automatyczną weryfikacją scenariuszy — bez potrzeby posiadania konta w chmurze czy lokalnego klastra.
+
 # KubeKosh PL — Instrukcja instalacji i użytkowania
 
 ## Co zostało przetłumaczone
