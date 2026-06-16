@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/zeborg/kubekosh">
-    <img src="assets/banner.png" alt="KubeKosh" width="600"/>
+    <img src="assets/logo.svg" alt="KubeKosh" width="600"/>
   </a>
 </p>
 
